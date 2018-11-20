@@ -23,7 +23,7 @@ TODO: topic slugs should be unique, so they act as the primary keys in this tabl
     - `description` field which is a string giving a brief description of a given topic
 
 * Each user should have:
-    - `user_id` which is a primary key for the topics table
+    - `user_id` which is the primary key
     - `username` 
     - `avatar_url` 
     - `name` 
