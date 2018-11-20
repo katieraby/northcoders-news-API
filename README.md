@@ -189,7 +189,7 @@ POST /api/articles/:article_id/comments
 
 
 ```http
-PATCH /api/comments/:comment_id
+PATCH /api/articles/:article_id/comments/:comment_id
 ```
 
 - accepts an object in the form `{  inc_votes: newVote  }`
@@ -199,7 +199,7 @@ PATCH /api/comments/:comment_id
 
 
 ```http
-DELETE /api/comments/:comment_id
+DELETE /api/articles/:article_id/comments/:comment_id
 ```
 
 - should delete the given comment by `comment_id`
