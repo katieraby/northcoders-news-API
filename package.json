@@ -4,7 +4,10 @@
   "description": "## Northcoders News API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./",
+    "precommit": "npm t",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,9 @@
   "dependencies": {
     "knex": "^0.15.2",
     "pg": "^7.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "husky": "^1.1.4"
   }
 }
