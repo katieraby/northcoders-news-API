@@ -4,7 +4,7 @@
 
 ### Background
 
-We will be building the API which to use in the Northcoders News Sprint during the Front End block of the course.
+We will be building the API to use in the Northcoders News Sprint during the Front End block of the course.
 
 Our database will be PSQL, and you will interact with it using [Knex](https://knexjs.org).
 
