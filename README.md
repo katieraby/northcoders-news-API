@@ -138,6 +138,7 @@ GET /api/articles/:article_id
   - `author` which is the `username` from the users table,
   - `title`
   - `votes`
+  - `body`
   - `comment_count` which is the count of all the comments with this article_id. A particular SQL clause is useful for this job!
   - `created_at`
   - `topic`
@@ -214,7 +215,7 @@ GET /api/users
   - `name`
 
 ```http
-GET /api/users/:username
+GET /api/users/:user_id
 ```
 
 - should respond with a user object
