@@ -223,7 +223,7 @@ GET /api/users
   - `name`
 
 ```http
-GET /api/users/:user_id
+GET /api/users/:username
 ```
 
 - should respond with a user object
