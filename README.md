@@ -26,8 +26,7 @@ Data has been provided for both testing and development environments so you will
 
 - Each user should have:
 
-  - `user_id` which is the primary key
-  - `username`
+  - `username` which is the primary key & unique
   - `avatar_url`
   - `name`
 
@@ -37,12 +36,12 @@ Data has been provided for both testing and development environments so you will
   - `body`
   - `votes` defaults to 0
   - `topic` field which references the slug in the topics table
-  - `user_id` field that references a user's primary key.
+  - `username` field that references a user's primary key.
   - `created_at` defaults to the current date
 
 * Each comment should have:
   - `comment_id` which is the primary key
-  - `user_id` field that references a user's primary key
+  - `username` field that references a user's primary key
   - `article_id` field that references an article's primary key
   - `votes` defaults to 0
   - `created_at` defaults to the current date
@@ -110,7 +109,7 @@ Queries
 POST /api/topics/:topic/articles
 ```
 
-- accepts an object containing a `title` , `body` and a `user_id` property
+- accepts an object containing a `title` , `body` and a `username` property
 - responds with the posted article
 
 ```http
@@ -193,7 +192,7 @@ Queries
 POST /api/articles/:article_id/comments
 ```
 
-- accepts an object with a `user_id` and `body`
+- accepts an object with a `username` and `body`
 - responds with the posted comment
 
 ```http
@@ -218,7 +217,6 @@ GET /api/users
 
 - should respond with an array of user objects
 - each user object should have
-  - `user_id`
   - `username`
   - `avatar_url`
   - `name`
@@ -229,7 +227,6 @@ GET /api/users/:username
 
 - should respond with a user object
 - each user should have
-  - `user_id`
   - `username`
   - `avatar_url`
   - `name`
