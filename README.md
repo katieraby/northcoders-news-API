@@ -122,6 +122,7 @@ GET /api/articles
   - `author` which is the `username` from the users table,
   - `title`
   - `article_id`
+  - `body`
   - `votes`
   - `comment_count` which is the accumulated count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
   - `created_at`
