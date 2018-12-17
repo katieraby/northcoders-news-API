@@ -160,12 +160,14 @@ PATCH /api/articles/:article_id
     E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
     `{ inc_votes : -100 }` would decrement the current article's vote property by 100
 
+- this end-point should respond with the article you have just updated    
+
 ```http
 DELETE /api/articles/:article_id
 ```
 
 - should delete the given article by `article_id`
-- should respond with an empty object
+- should respond with 204 and no-content
 
 ```http
 GET /api/articles/:article_id/comments
@@ -204,12 +206,14 @@ PATCH /api/articles/:article_id/comments/:comment_id
     E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
     `{ inc_votes : -1 }` would decrement the current article's vote property by 1
 
+- this end-point should respond with the comment you have just updated
+
 ```http
 DELETE /api/articles/:article_id/comments/:comment_id
 ```
 
 - should delete the given comment by `comment_id`
-- should respond with an empty object
+- should respond with 204 and no-content
 
 ```http
 GET /api/users
