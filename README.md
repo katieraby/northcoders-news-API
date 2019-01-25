@@ -8,14 +8,17 @@ We will be building the API to use in the Northcoders News Sprint during the Fro
 
 Our database will be PSQL, and you will interact with it using [Knex](https://knexjs.org).
 
-### NOTE:
+### NOTE 1:
 
 For this sprint ensure you have the eslint extension installed in VS-Code as it will help to enforce best practices when you are writing your code.
+
+### NOTE 1:
+
+Read this README.md carefully! :) 
 
 ### Step 1 - Seeding
 
 Data has been provided for both testing and development environments so you will need to write a seed function to seed your database. You should think about how you will write your seed file to use either test data or dev data depending on the environment that you're running in.
-
 
 1. You should have separate tables for topics, articles, users and comments, and you will need to think carefully about the order in which you seed your data.
 
@@ -49,7 +52,6 @@ Data has been provided for both testing and development environments so you will
 
 - NOTE: psql expects Date types to be in a date format - not a timestamp! However, you can easily turn a timestamp into a date using js...
 
-
 ### Step 2 - Building and Testing
 
 1.  Build your Express app
@@ -75,20 +77,23 @@ GET /api/topics
 POST /api/topics
 ```
 
-- accepts an object containing `slug` and `description` property, the `slug` must be unique
+- body accepts an object containing `slug` and `description` property, the `slug` must be unique
 - responds with the posted topic object
 
 ```http
 GET /api/topics/:topic/articles
 ```
 
-- responds with an array of article objects for a given topic
+Responds with:
+
+- a `total_count` property, displaying the total number of articles for the given topic
+- an `articles` array of article objects for the given topic
 - each article should have:
   - `author` which is the `username` from the users table,
   - `title`
   - `article_id`
   - `votes`
-  - `comment_count` which is the accumulated count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
+  - `comment_count` which is the count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
   - `created_at`
   - `topic`
 
@@ -98,32 +103,34 @@ Queries
   - `limit`, which limits the number of responses (defaults to 10)
   - `sort_by`, which sorts the articles by any valid column (defaults to date)
   - `p`, stands for page which specifies the page at which to start (calculated using limit)
-  - `order`, which can be set to `asc` or `desc` for ascending or descending  (defaults to descending)
-
+  - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
 ## IMPORTANT:
-* Both `comments` and `articles` data in the test-data are given ordered in descending order of time : this will be useful to you when it comes to writing your tests!
 
+- Both `comments` and `articles` data in the test-data are given ordered in descending order of time : this will be useful to you when it comes to writing your tests!
 
 ```http
 POST /api/topics/:topic/articles
 ```
 
-- accepts an object containing a `title` , `body` and a `username` property
+- request body accepts an object containing a `title` , `body` and a `username` property
 - responds with the posted article
 
 ```http
 GET /api/articles
 ```
 
-- responds with an array of article objects
+Responds with:
+
+- a `total_count` property, displaying the total number of articles
+- an `articles` array of article objects
 - each article should have:
   - `author` which is the `username` from the users table,
   - `title`
   - `article_id`
   - `body`
   - `votes`
-  - `comment_count` which is the accumulated count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
+  - `comment_count` which is the total count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
   - `created_at`
   - `topic`
 
@@ -133,8 +140,7 @@ Queries
   - `limit`, which limits the number of responses (defaults to 10)
   - `sort_by`, which sorts the articles by any valid column (defaults to date)
   - `p`, stands for page which specifies the page at which to start (calculated using limit)
-  - `order`, which can be set to `asc` or `desc` for ascending or descending  (defaults to descending)
-
+  - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
 ```http
 GET /api/articles/:article_id
@@ -147,7 +153,7 @@ GET /api/articles/:article_id
   - `title`
   - `votes`
   - `body`
-  - `comment_count` which is the count of all the comments with this article_id. A particular SQL clause is useful for this job!
+  - `comment_count` which is the total count of all the comments with this article_id. A particular SQL clause is useful for this job!
   - `created_at`
   - `topic`
 
@@ -155,12 +161,13 @@ GET /api/articles/:article_id
 PATCH /api/articles/:article_id
 ```
 
-- accepts an object in the form `{ inc_votes: newVote }`
+- request body accepts an object in the form `{ inc_votes: newVote }`
+
   - `newVote` will indicate how much the `votes` property in the database should be updated by
     E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
     `{ inc_votes : -100 }` would decrement the current article's vote property by 100
 
-- this end-point should respond with the article you have just updated    
+- this end-point should respond with the article you have just updated
 
 ```http
 DELETE /api/articles/:article_id
@@ -194,14 +201,15 @@ Queries
 POST /api/articles/:article_id/comments
 ```
 
-- accepts an object with a `username` and `body`
+- request body accepts an object with a `username` and `body`
 - responds with the posted comment
 
 ```http
 PATCH /api/articles/:article_id/comments/:comment_id
 ```
 
-- accepts an object in the form `{ inc_votes: newVote }`
+- request body accepts an object in the form `{ inc_votes: newVote }`
+
   - `newVote` will indicate how much the `votes` property in the database should be updated by
     E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
     `{ inc_votes : -1 }` would decrement the current article's vote property by 1
@@ -226,6 +234,13 @@ GET /api/users
   - `name`
 
 ```http
+POST /api/users
+```
+
+- request body accepts an object containing a `username` , `avatar_url` and a `name` property
+- responds with the posted user
+
+```http
 GET /api/users/:username
 ```
 
@@ -234,6 +249,31 @@ GET /api/users/:username
   - `username`
   - `avatar_url`
   - `name`
+
+```http
+GET /api/users/:username/articles
+```
+
+Responds with:
+
+- a `total_count` property, displaying the total number of articles created by the given user
+- an `articles` array of article objects created by the given user
+- each article should have:
+  - `author` which is the `username` from the users table,
+  - `title`
+  - `article_id`
+  - `votes`
+  - `comment_count` which is the total count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
+  - `created_at`
+  - `topic`
+
+Queries
+
+- This route should accept the following queries:
+  - `limit`, which limits the number of responses (defaults to 10)
+  - `sort_by`, which sorts the articles by any valid column (defaults to date)
+  - `p`, stands for page which specifies the page at which to start (calculated using limit)
+  - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
 ```http
 GET /api
