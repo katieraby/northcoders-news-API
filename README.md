@@ -97,16 +97,20 @@ GET /api
 
 ***
 
-#### Route Requirements:
+#### Route Requirements
 
 These have been split into **must haves** and some slightly more advanced _nice to have / if time_. The _if time_ tasks should be left until you have tested and implemented all other functionality.
+
+***
 
 ```http
 GET /api/topics
 ```
 
-**Responds with**
-- an array of topic objects - each object should have a `slug` and `description` property.
+##### Responds with
+- an array of topic objects, each of which should have the following properties:
+  * `slug`
+  * `description`
 
 ***
 
@@ -114,10 +118,12 @@ GET /api/topics
 POST /api/topics
 ```
 
-**Request body accepts**
-- an object containing `slug` and `description` property, the `slug` must be unique
+##### Request body accepts
+- an object containing the following properties:
+  * `slug` which must be unique
+  * `description`
 
-**Responds with**
+##### Responds with
 - the posted topic object
 
 ***
@@ -126,28 +132,28 @@ POST /api/topics
 GET /api/articles
 ```
 
-**Responds with:**
-- an `articles` array of article objects
-- each article should have:
-  * `author` which is the `username` from the users table,
+##### Responds with
+- an `articles` array of article objects, each of which should have the following properties:
+  * `author` which is the `username` from the users table
   * `title`
   * `article_id`
   * `body`
   * `topic`
   * `created_at`
   * `votes`
-  * `comment_count` which is the total count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
-- This route should accept the following queries:
+  * `comment_count` which is the total count of all the comments with this article_id - you should make use of knex queries in order to achieve this
+
+##### Should accept queries
   * `author`, which filters the articles by the username value specified in the query
   * `topic`, which filters the articles by the topic value specified in the query
   * `sort_by`, which sorts the articles by any valid column (defaults to date)
   * `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
-**If time:**
-- Add a `total_count` property, displaying the total number of articles (if there is a user and/or topic filter, this should display the total number of articles by the user / belonging to the topic)
-- This route should accept the following queries:
+##### If time
+- accept the following queries:
   * `limit`, which limits the number of responses (defaults to 10)
   * `p`, stands for page which specifies the page at which to start (calculated using limit)
+- add a `total_count` property, displaying the total number of articles (this should display the total number of articles with any filters applied, discounting the limit)
 
 ***
 
@@ -155,10 +161,14 @@ GET /api/articles
 POST /api/articles
 ```
 
-**Request body accepts**
-- an object containing a `title` , `body`, `topic` and a `username` property
+##### Request body accepts
+- an object containing the following properties:
+  * `title`
+  * `body`
+  * `topic`
+  * `username`
 
-**Responds with**
+##### Responds with
 - the posted article
 
 ***
@@ -167,17 +177,16 @@ POST /api/articles
 GET /api/articles/:article_id
 ```
 
-**Responds with**
-- an article object
-- the article should have:
-  * `author` which is the `username` from the users table,
+##### Responds with
+- an article object,  which should have the following properties:
+  * `author` which is the `username` from the users table
   * `title`
   * `article_id`
   * `body`
   * `topic`
   * `created_at`
   * `votes`
-  * `comment_count` which is the total count of all the comments with this article_id. You should make use of knex queries in order to achieve this.
+  * `comment_count` which is the total count of all the comments with this article_id - you should make use of knex queries in order to achieve this
 
 ***
 
@@ -185,26 +194,30 @@ GET /api/articles/:article_id
 PATCH /api/articles/:article_id
 ```
 
-**Request body accepts**
+##### Request body accepts
 - an object in the form `{ inc_votes: newVote }`
 
   * `newVote` will indicate how much the `votes` property in the database should be updated by
-    E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
-    `{ inc_votes : -100 }` would decrement the current article's vote property by 100
 
-**Responds with**
-- the article you have just updated
+  e.g.
+
+  `{ inc_votes : 1 }` would increment the current article's vote property by 1
+
+  `{ inc_votes : -100 }` would decrement the current article's vote property by 100
+
+##### Responds with
+- the updated article
 
 ***
 
 ```http
 DELETE /api/articles/:article_id
 ```
-**Should**
+##### Should
 - delete the given article by `article_id`
 
-**Responds with**
-- status 204 and no-content
+##### Responds with
+- status 204 and no content
 
 ***
 
@@ -212,20 +225,20 @@ DELETE /api/articles/:article_id
 GET /api/articles/:article_id/comments
 ```
 
-**Responds with**
-- an array of comments for the given `article_id`
-- each comment should have
+##### Responds with
+- an array of comments for the given `article_id` of which each comment should have the following properties:
   * `comment_id`
   * `votes`
   * `created_at`
   * `author` which is the `username` from the users table
   * `body`
-- This route should accept the following queries:
+
+##### Accepts queries
   * `sort_by`, which sorts the articles by any valid column (defaults to date)
   * `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
-**If time:**
-- This route should accept the following queries:
+##### If time
+- accept the following queries:
   * `limit`, which limits the number of responses (defaults to 10)
   * `p`, stands for page which specifies the page at which to start (calculated using limit)
 
@@ -235,10 +248,12 @@ GET /api/articles/:article_id/comments
 POST /api/articles/:article_id/comments
 ```
 
-**Request body accepts**
-- an object with a `username` and `body`
+##### Request body accepts
+- an object with the following properties:
+  * `username`
+  * `body`
 
-**Responds with**
+##### Responds with
 - the posted comment
 
 ***
@@ -246,14 +261,18 @@ POST /api/articles/:article_id/comments
 ```http
 PATCH /api/comments/:comment_id
 ```
-**Request body accepts**
+##### Request body accepts
 - an object in the form `{ inc_votes: newVote }`
 
   * `newVote` will indicate how much the `votes` property in the database should be updated by
-    E.g `{ inc_votes : 1 }` would increment the current article's vote property by 1
-    `{ inc_votes : -1 }` would decrement the current article's vote property by 1
 
-**Responds with**
+  e.g.
+
+  `{ inc_votes : 1 }` would increment the current article's vote property by 1
+
+  `{ inc_votes : -1 }` would decrement the current article's vote property by 1
+
+##### Responds with
 - the updated comment
 
 ***
@@ -262,11 +281,11 @@ PATCH /api/comments/:comment_id
 DELETE /api/comments/:comment_id
 ```
 
-**Should**
+##### Should
 - delete the given comment by `comment_id`
 
-**Responds with**
-- status 204 and no-content
+##### Responds with
+- status 204 and no content
 
 ***
 
@@ -274,9 +293,8 @@ DELETE /api/comments/:comment_id
 GET /api/users
 ```
 
-**Responds with**
-- an array of user objects
-- each user object should have
+##### Responds with
+- an array of user objects, each of which should have the following properties:
   * `username`
   * `avatar_url`
   * `name`
@@ -287,10 +305,13 @@ GET /api/users
 POST /api/users
 ```
 
-**Request body accepts**
-- an object containing a `username` , `avatar_url` and a `name` property
+##### Request body accepts
+- an object containing the following properties:
+  * `username`
+  * `avatar_url`
+  * `name`
 
-**Responds with**
+##### Responds with
 - the posted user
 
 ***
@@ -299,9 +320,8 @@ POST /api/users
 GET /api/users/:username
 ```
 
-**Responds with**
-- a user object
-- each user should have
+##### Responds with
+- a user object which should have the following properties:
   * `username`
   * `avatar_url`
   * `name`
@@ -311,7 +331,7 @@ GET /api/users/:username
 ```http
 GET /api
 ```
-**Responds with**
+##### Responds with
 - JSON describing all the available endpoints on your API
 
 ***
