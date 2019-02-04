@@ -39,12 +39,12 @@ Data has been provided for both testing and development environments so you will
   * `body`
   * `votes` defaults to 0
   * `topic` field which references the slug in the topics table
-  * `username` field that references a user's primary key.
+  * `author` field that references a user's primary key (username)
   * `created_at` defaults to the current date
 
 * Each comment should have:
   * `comment_id` which is the primary key
-  * `username` field that references a user's primary key
+  * `author` field that references a user's primary key (username)
   * `article_id` field that references an article's primary key
   * `votes` defaults to 0
   * `created_at` defaults to the current date
@@ -149,7 +149,7 @@ GET /api/articles
   * `sort_by`, which sorts the articles by any valid column (defaults to date)
   * `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
-##### If time
+##### If time (the following will make pagination easier when you get to building your front-end application)
 - accept the following queries:
   * `limit`, which limits the number of responses (defaults to 10)
   * `p`, stands for page which specifies the page at which to start (calculated using limit)
@@ -237,7 +237,7 @@ GET /api/articles/:article_id/comments
   * `sort_by`, which sorts the articles by any valid column (defaults to date)
   * `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
-##### If time
+##### If time  (the following will make pagination easier when you get to building your front-end application)
 - accept the following queries:
   * `limit`, which limits the number of responses (defaults to 10)
   * `p`, stands for page which specifies the page at which to start (calculated using limit)
