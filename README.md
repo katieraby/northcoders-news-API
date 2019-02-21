@@ -50,7 +50,7 @@ Data has been provided for both testing and development environments so you will
   * `created_at` defaults to the current date
   * `body`
 
-- **NOTE:** psql expects Date types to be in a date format - not a timestamp! However, you can easily turn a timestamp into a date using js...
+- **NOTE:** psql expects Date types to be in a date format - not a timestamp! However, you can easily turn a timestamp into a date using JS...
 
 ***
 
@@ -70,6 +70,7 @@ Data has been provided for both testing and development environments so you will
 #### Routes
 
 Your server should have the following end-points:
+
 ```http
 GET /api/topics
 POST /api/topics
@@ -99,7 +100,7 @@ GET /api
 
 #### Route Requirements
 
-These have been split into **must haves** and some slightly more advanced _nice to have / if time_. The _if time_ tasks should be left until you have tested and implemented all other functionality.
+These have been split into **must haves** and some slightly more advanced _nice to have / if time_. The _if time_ tasks should be **left until you have tested and implemented all other functionality**.
 
 ***
 
