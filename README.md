@@ -102,6 +102,28 @@ GET /api
 
 These have been split into **must haves** and some slightly more advanced _nice to have / if time_. The _if time_ tasks should be **left until you have tested and implemented all other functionality**.
 
+_**Remember: All of your endpoints should send the below responses in an object, with a key name of what it is that being sent. E.g.**_
+
+```json
+{
+  "topics": [
+    {
+      "description": "Code is love, code is life",
+      "slug": "coding"
+    },
+    {
+      "description": "FOOTIE!",
+      "slug": "football"
+    },
+    {
+      "description": "Hey good looking, what you got cooking?",
+      "slug": "cooking"
+    },
+  ]
+}
+
+```
+
 ***
 
 ```http
