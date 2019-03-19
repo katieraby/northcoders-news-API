@@ -230,8 +230,6 @@ GET /api/articles/:article_id/comments
 - `sort_by`, which sorts the articles by any valid column (defaults to created_at)
 - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
-#### If time (the following will make pagination easier when you get to building your front-end application)
-
 ---
 
 ```http
