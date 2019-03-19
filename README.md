@@ -1,4 +1,4 @@
-# BE2-NC-News
+# BEN-NC-News
 
 ## Northcoders News API
 
