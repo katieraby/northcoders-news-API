@@ -50,7 +50,7 @@ Data has been provided for both testing and development environments so you will
   * `created_at` defaults to the current date
   * `body`
 
-- **NOTE:** psql expects Date types to be in a date format - not a timestamp! However, you can easily turn a timestamp into a date using JS...
+- **NOTE:** psql expects Date types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**...
 
 ***
 
