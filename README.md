@@ -10,7 +10,7 @@ Our database will be PSQL, and you will interact with it using [Knex](https://kn
 
 We can use a project generator from `npm` to create some boilerplate code for our application.
 
-[Yo](https://www.npmjs.com/package/yo) is a framework for creating project generators, so we will need to install it, as well as the specific project generator we want to use [Knexpress](https://www.npmjs.com/package/generator-knexpress).
+[Yo](https://www.npmjs.com/package/yo) is a framework for creating project generators, so we will need to install it, as well as the specific project generator we want to use: [Knexpress](https://www.npmjs.com/package/generator-knexpress).
 
 ```bash
 npm i yo generator-knexpress
@@ -21,6 +21,8 @@ Once installed, we can run the generator with `yo` to create the project:
 ```bash
 yo knexpress
 ```
+
+After generating the project, familiarise yourself with the structure and scripts available. Then, copy the data from this repository over the appropriate place in your project.
 
 ## Step 2 - Seeding
 
@@ -40,6 +42,7 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `name`
 
 - Each article should have:
+
   - `article_id` which is the primary key
   - `title`
   - `body`
@@ -48,7 +51,8 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `author` field that references a user's primary key (username)
   - `created_at` defaults to the current date
 
-* Each comment should have:
+- Each comment should have:
+
   - `comment_id` which is the primary key
   - `author` field that references a user's primary key (username)
   - `article_id` field that references an article's primary key
@@ -56,7 +60,7 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `created_at` defaults to the current date
   - `body`
 
-- **NOTE:** psql expects Date types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**...
+- **NOTE:** psql expects `Date` types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**...
 
 ---
 
