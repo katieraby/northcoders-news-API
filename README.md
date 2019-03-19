@@ -6,7 +6,23 @@ We will be building the API to use in the Northcoders News Sprint during the Fro
 
 Our database will be PSQL, and you will interact with it using [Knex](https://knexjs.org).
 
-## Step 1 - Seeding
+## Step 1 - Setting Up the Project
+
+We can use a project generator from `npm` to create some boilerplate code for our application.
+
+[Yo](https://www.npmjs.com/package/yo) is a framework for creating project generators, so we will need to install it, as well as the specific project generator we want to use [Knexpress](https://www.npmjs.com/package/generator-knexpress).
+
+```bash
+npm i yo generator-knexpress
+```
+
+Once installed, we can run the generator with `yo` to create the project:
+
+```bash
+yo knexpress
+```
+
+## Step 2 - Seeding
 
 Data has been provided for both testing and development environments so you will need to write a seed function to seed your database. You should think about how you will write your seed file to use either test data or dev data depending on the environment that you're running in.
 
@@ -44,7 +60,7 @@ You should have separate tables for topics, articles, users and comments, and yo
 
 ---
 
-## Step 2 - Building Endpoints
+## Step 3 - Building Endpoints
 
 - Use proper project configuration from the offset, being sure to treat development and test differently.
 - Test each route **as you go**, checking both successful requests and the variety of errors you could expect to encounter.
