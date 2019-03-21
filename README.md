@@ -26,7 +26,7 @@ After generating the project, familiarise yourself with the structure and script
 
 ## Step 2 - Seeding
 
-Data has been provided for both testing and development environments so you will need to write a seed function to seed your database. You should think about how you will write your seed file to use either test data or dev data depending on the environment that you're running in.
+Data has been provided for both testing and development environments so you will need to write a seed function to insert the appropriate data into your database. You should think about how you will write your seed file to use either test data or dev data depending on the environment that you're running in.
 
 You should have separate tables for topics, articles, users and comments, and you will need to think carefully about the order in which you seed your data.
 
@@ -315,13 +315,13 @@ GET /api
 
 ### Step 3 - Hosting
 
-Make sure your application and your database is hosted using heroku
+Make sure your application and your database is hosted using Heroku
 
 ### Step 4 - README
 
 Finally, you should write a README for this project (and remove this one). The README should be broken down like this: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
 
-It should also include the link where your heroku app is hosted.
+It should also include the link where your Heroku app is hosted.
 
 ### Optional Extras
 
