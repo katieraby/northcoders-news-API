@@ -1,4 +1,4 @@
-# BEN-NC-News
+# BEND-NC-News
 
 ## Northcoders News API
 
