@@ -297,7 +297,7 @@ GET /api/users/:username
 
 # STOP!
 
-If you have reached this point, let one of the teaching team know. One of us will be able to take a look at our code and give you some feedback.
+If you have reached this point, let someone on the teaching team know. One of us will be able to take a look at your code and give you some feedback. While we are looking at your code, you can continue with the following:
 
 # Continue...
 
@@ -319,9 +319,11 @@ Make sure your application and your database is hosted using Heroku
 
 ### Step 4 - README
 
-Finally, you should write a README for this project (and remove this one). The README should be broken down like this: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+Write a README for your project. Check out this [guide](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for what sort of things should be included.
 
-It should also include the link where your Heroku app is hosted.
+It should also include the link to where your Heroku app is hosted.
+
+Take a look at GitHub's guide for [mastering markdown](https://guides.github.com/features/mastering-markdown/) for making it look pretty!
 
 ### Optional Extras
 
