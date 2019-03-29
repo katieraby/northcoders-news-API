@@ -339,7 +339,7 @@ GET /api/articles
 - Should accepts the following queries:
   - `limit`, which limits the number of responses (defaults to 10)
   - `p`, stands for page which specifies the page at which to start (calculated using limit)
-- add a `total_count` property, displaying the total number of articles (this should display the total number of articles with any filters applied, discounting the limit)
+- add a `total_count` property, displaying the total number of articles (**this should display the total number of articles with any filters applied, discounting the limit**)
 
 ---
 
