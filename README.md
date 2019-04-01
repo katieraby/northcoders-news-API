@@ -13,7 +13,7 @@ We can use a project generator from `npm` to create some boilerplate code for ou
 [Yo](https://www.npmjs.com/package/yo) is a framework for creating project generators, so we will need to install it, as well as the specific project generator we want to use: [Knexpress](https://www.npmjs.com/package/generator-knexpress).
 
 ```bash
-npm i yo generator-knexpress
+npm i -g yo generator-knexpress
 ```
 
 Once installed, we can run the generator with `yo` to create the project:
