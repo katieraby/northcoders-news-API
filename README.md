@@ -344,7 +344,7 @@ GET /api/articles
 ---
 
 ```http
-GET /api/comments
+GET /api/articles/:article_id/comments
 ```
 
 Should accept the following queries:
