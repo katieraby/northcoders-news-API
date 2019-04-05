@@ -200,20 +200,6 @@ PATCH /api/articles/:article_id
 ---
 
 ```http
-DELETE /api/articles/:article_id
-```
-
-#### Should
-
-- delete the given article by `article_id`
-
-#### Responds with
-
-- status 204 and no content
-
----
-
-```http
 GET /api/articles/:article_id/comments
 ```
 
