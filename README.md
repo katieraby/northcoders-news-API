@@ -67,7 +67,7 @@ You should have separate tables for topics, articles, users and comments, and yo
 ## Step 3 - Building Endpoints
 
 - Use proper project configuration from the offset, being sure to treat development and test differently.
-- Test each route **as you go**, checking both successful requests **and the variety of errors you could expect to encounter** (See the error-handling file here for ideas of errors that will need to be considered)[error-handling.md].
+- Test each route **as you go**, checking both successful requests **and the variety of errors you could expect to encounter** [See the error-handling file here for ideas of errors that will need to be considered](error-handling.md).
 - After taking the happy path when testing a route, think about how a client could make it go wrong. Add a test for that situation, then error handling to deal with it gracefully.
 - **HINT**: You will need to take advantage of knex migrations in order to efficiently test your application.
 
