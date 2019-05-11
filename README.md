@@ -154,10 +154,10 @@ GET /api/articles
 
 #### Should accept queries
 
-- `author`, which filters the articles by the username value specified in the query
-- `topic`, which filters the articles by the topic value specified in the query
 - `sort_by`, which sorts the articles by any valid column (defaults to date)
 - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
+- `author`, which filters the articles by the username value specified in the query
+- `topic`, which filters the articles by the topic value specified in the query
 
 ---
 
