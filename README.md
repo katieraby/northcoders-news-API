@@ -62,7 +62,7 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `created_at` defaults to the current date
   - `body`
 
-- **NOTE:** psql expects `Date` types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**...
+- **NOTE:** psql expects `Date` types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**... [JavaScript Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 ---
 
