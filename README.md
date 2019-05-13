@@ -1,5 +1,7 @@
 # Northcoders News API
 
+**You can fork, but there is no need to `git clone` this repository.**
+
 ## Background
 
 We will be building the API to use in the Northcoders News Sprint during the Front End block of the course.
