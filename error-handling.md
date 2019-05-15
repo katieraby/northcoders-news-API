@@ -27,7 +27,7 @@ For each thing that could go wrong, make a test with your expected status code a
 
 ## Unavailable Routes
 
-### GET `/asdfghjkl`
+### GET `/not-a-route`
 
 - Status:
 
