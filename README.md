@@ -26,7 +26,7 @@ yo knexpress
 
 This script will create a new folder for your project, and initialise it as a git repository.
 
-After generating the project, familiarise yourself with the structure and scripts available. Then, copy the development-data and test-data from this repository over the appropriate place in your project.
+After generating the project, familiarise yourself with the structure and scripts available. Then, _copy & paste_ the `development-data` and `test-data` from this repository over the appropriate place in your newly generated project.
 
 ## Step 2 - Seeding
 
