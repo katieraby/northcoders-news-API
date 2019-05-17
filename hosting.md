@@ -73,12 +73,12 @@ At the top of your `knexfile.js`, add the following line of code:
 const { DB_URL } = process.env;
 ```
 
-Then add a `production` key to the `dbConfigs` object:
+Then add a `production` key to the `customConfigs` object:
 
 ```js
 const { DB_URL } = process.env;
 // ...
-const dbConfigs = {
+const customConfigs = {
   // ...
   production: {
     connection: `${DB_URL}?ssl=true`,
