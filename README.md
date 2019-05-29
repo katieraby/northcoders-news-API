@@ -84,18 +84,18 @@ Your server _must_ have the following endpoints:
 ```http
 GET /api/topics
 
-GET /api/articles
+GET /api/users/:username
 
 GET /api/articles/:article_id
 PATCH /api/articles/:article_id
 
-GET /api/articles/:article_id/comments
 POST /api/articles/:article_id/comments
+GET /api/articles/:article_id/comments
+
+GET /api/articles
 
 PATCH /api/comments/:comment_id
 DELETE /api/comments/:comment_id
-
-GET /api/users/:username
 
 GET /api
 ```
@@ -140,26 +140,15 @@ GET /api/topics
 ---
 
 ```http
-GET /api/articles
+GET /api/users/:username
 ```
 
 #### Responds with
 
-- an `articles` array of article objects, each of which should have the following properties:
-  - `author` which is the `username` from the users table
-  - `title`
-  - `article_id`
-  - `topic`
-  - `created_at`
-  - `votes`
-  - `comment_count` which is the total count of all the comments with this article_id - you should make use of knex queries in order to achieve this
-
-#### Should accept queries
-
-- `sort_by`, which sorts the articles by any valid column (defaults to date)
-- `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
-- `author`, which filters the articles by the username value specified in the query
-- `topic`, which filters the articles by the topic value specified in the query
+- a user object which should have the following properties:
+  - `username`
+  - `avatar_url`
+  - `name`
 
 ---
 
@@ -178,7 +167,7 @@ GET /api/articles/:article_id
   - `created_at`
   - `votes`
   - `comment_count` which is the total count of all the comments with this article_id - you should make use of knex queries in order to achieve this
-
+  
 ---
 
 ```http
@@ -204,6 +193,22 @@ PATCH /api/articles/:article_id
 ---
 
 ```http
+POST /api/articles/:article_id/comments
+```
+
+#### Request body accepts
+
+- an object with the following properties:
+  - `username`
+  - `body`
+
+#### Responds with
+
+- the posted comment
+
+---
+
+```http
 GET /api/articles/:article_id/comments
 ```
 
@@ -224,20 +229,29 @@ GET /api/articles/:article_id/comments
 ---
 
 ```http
-POST /api/articles/:article_id/comments
+GET /api/articles
 ```
-
-#### Request body accepts
-
-- an object with the following properties:
-  - `username`
-  - `body`
 
 #### Responds with
 
-- the posted comment
+- an `articles` array of article objects, each of which should have the following properties:
+  - `author` which is the `username` from the users table
+  - `title`
+  - `article_id`
+  - `topic`
+  - `created_at`
+  - `votes`
+  - `comment_count` which is the total count of all the comments with this article_id - you should make use of knex queries in order to achieve this
+
+#### Should accept queries
+
+- `sort_by`, which sorts the articles by any valid column (defaults to date)
+- `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
+- `author`, which filters the articles by the username value specified in the query
+- `topic`, which filters the articles by the topic value specified in the query
 
 ---
+
 
 ```http
 PATCH /api/comments/:comment_id
@@ -274,18 +288,6 @@ DELETE /api/comments/:comment_id
 - status 204 and no content
 
 ---
-
-```http
-GET /api/users/:username
-```
-
-#### Responds with
-
-- a user object which should have the following properties:
-  - `username`
-  - `avatar_url`
-  - `name`
-
 # STOP!
 
 If you have reached this point, go back and review all of the routes that you have created. Consider whether there are any errors that could occur that you haven't yet accounted for. If you identify any, write a test, and then handle the error. Even if you can't think of a specific error for a route, every controller that invokes a promise-based model should contain a `.catch` block to prevent unhandled promise rejections.
