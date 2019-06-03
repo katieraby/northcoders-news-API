@@ -53,7 +53,7 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `votes` defaults to 0
   - `topic` field which references the slug in the topics table
   - `author` field that references a user's primary key (username)
-  - `created_at` defaults to the current date
+  - `created_at` defaults to the current timestamp
 
 - Each comment should have:
 
@@ -61,10 +61,10 @@ You should have separate tables for topics, articles, users and comments, and yo
   - `author` field that references a user's primary key (username)
   - `article_id` field that references an article's primary key
   - `votes` defaults to 0
-  - `created_at` defaults to the current date
+  - `created_at` defaults to the current timestamp
   - `body`
 
-- **NOTE:** psql expects `Date` types to be in a date format - not a timestamp! However, you can easily **turn a timestamp into a date using JS**... [JavaScript Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+- **NOTE:** psql expects `Timestamp` types to be in a specific date format - **not a unix timestamp** as they are in our data! However, you can easily **re-format a unix timestamp into something compatible with our database using JS**... [JavaScript Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 ---
 
