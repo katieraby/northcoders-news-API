@@ -52,9 +52,9 @@ git remote -v
 
 In this repo we have provided you with the knexfile. Make sure to add it to the `.gitignore` once you start pushing to your own repository. If you are on linux insert your postgres username and password into the knexfile.
 
-You have also been provided with a `db` folder with some data, a [setup.sql](./db/setup.sql) file, a `seeds` folder and a `utils` folder.
+You have also been provided with a `db` folder with some data, a [setup.sql](./db/setup.sql) file, a `seeds` folder and a `utils` folder. You should also take a minute to familiarise yourself with the npm scripts you have been provided.
 
-Your second task is to make accessing the both sets of data around your project easier. You should make 3 `index.js` files: one in `db`, and one in each of your data folders.
+Your second task is to make accessing both sets of data around your project easier. You should make 3 `index.js` files: one in `db`, and one in each of your data folders.
 
 The job of `index.js` in each the data folders is to export out all the data from that folder, currently stored in separate files. This is so that, when you need access to the data elsewhere, you can write one convenient require statement - to the index file, rather than having to require each file individually. Make sure the index file exports an object with values of the data from that folder with the keys:
 
@@ -79,18 +79,18 @@ This is where you will set up the schema for each table in your database.
 
 You should have separate tables for `topics`, `articles`, `users` and `comments`. You will need to think carefully about the order in which you create your migrations.
 
-- Each topic should have:
+Each topic should have:
 
 - `slug` field which is a unique string that acts as the table's primary key
 - `description` field which is a string giving a brief description of a given topic
 
-- Each user should have:
+Each user should have:
 
 - `username` which is the primary key & unique
 - `avatar_url`
 - `name`
 
-- Each article should have:
+Each article should have:
 
 - `article_id` which is the primary key
 - `title`
@@ -100,7 +100,7 @@ You should have separate tables for `topics`, `articles`, `users` and `comments`
 - `author` field that references a user's primary key (username)
 - `created_at` defaults to the current timestamp
 
-- Each comment should have:
+Each comment should have:
 
 - `comment_id` which is the primary key
 - `author` field that references a user's primary key (username)
