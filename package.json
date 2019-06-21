@@ -20,15 +20,6 @@
     "url": "https://github.com/northcoders/be-nc-news/issues"
   },
   "homepage": "https://github.com/northcoders/be-nc-news#readme",
-  "dependencies": {
-    "knex": "^0.17.6",
-    "pg": "^7.11.0"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-sorted": "^0.2.0",
-    "mocha": "^6.1.4",
-    "nodemon": "^1.19.0",
-    "supertest": "^4.0.2"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
