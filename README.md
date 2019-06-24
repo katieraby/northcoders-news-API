@@ -8,44 +8,31 @@ We will be building the API to use in the Northcoders News Sprint during the Fro
 
 Your database will be PSQL, and you will interact with it using [Knex](https://knexjs.org).
 
-## Step 1 - Setting up the Repository
+## Step 1 - Setting up your own repository
 
-Your first task is set up your own portfolio repository. Once you have cloned this repo, on github create your own **public** repo for your review. **Make sure NOT to initialise it with a README or .gitignore.**
+Clone this repo:
 
-Next, you should hook your cloned version to the newly created repo using the following terminal commands.
+```bash
+git clone https://github.com/northcoders/be-nc-news
 
-```console
-cd <YOUR-CLONED-REPO>(be-nc-news)
+cd be-nc-news
 ```
 
-```js
-git remote -v
+On GitHub create your own **public** repository for your project. **Make sure NOT to initialise it with a README or .gitignore.**
 
-// This should display a url to the Northcoders repo
-```
+Next, you should hook your local version up to the newly created GitHub repo. Use the following terminal commands, making sure to check the git remotes with each step (`git remote -v`):
 
-```js
+```bash
 git remote remove origin
 
-// This will remove your cloned version from pushing to ours
+# This will prevent you from pushing to the original Northcoders' repo.
 ```
 
-```js
-git remote -v
+```bash
+git remote add origin <YOUR-GITHUB-URL>
 
-// This should now show nothing
-```
-
-```js
-git remote add origin <YOUR- GITHUB-URL>
-
-// This will add your github location to your local git repository
-```
-
-```js
-git remote -v
-
-// This should now show your repo url and you are good to go...
+# This will add your GitHub location to your local git repository.
+# You can confirm this by checking the new git remote.
 ```
 
 ## Step 2 - Setting up your project
