@@ -41,15 +41,11 @@ For each thing that could go wrong, make a test with your expected status code a
 
 ### GET `/api/topics`
 
-- ?
+-
 
-### GET `/api/articles`
+### GET `/api/users/:username`
 
-- Bad queries:
-  - `sort_by` a column that doesn't exist
-  - `order` !== "asc" / "desc"
-  - `author` / `topic` that is not in the database
-  - `author` / `topic` that exists but does not have any articles associated with it
+-
 
 ### GET `/api/articles/:article_id`
 
@@ -62,14 +58,30 @@ For each thing that could go wrong, make a test with your expected status code a
 - Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
 - Some other property on request body (e.g. `{ inc_votes : "cat", name: 'Mitch' }`)
 
+### POST `/api/articles/:article_id/comments`
+
+-
+
 ### GET `/api/articles/:article_id/comments`
 
-### POST `/api/articles/:article_id/comments`
+-
+
+### GET `/api/articles`
+
+- Bad queries:
+  - `sort_by` a column that doesn't exist
+  - `order` !== "asc" / "desc"
+  - `author` / `topic` that is not in the database
+  - `author` / `topic` that exists but does not have any articles associated with it
 
 ### PATCH `/api/comments/:comment_id`
 
+-
+
 ### DELETE `/api/comments/:comment_id`
 
-### GET `/api/users/:username`
+-
 
 ### GET `/api`
+
+-
