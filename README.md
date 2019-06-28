@@ -264,7 +264,7 @@ GET /api/articles/:article_id/comments
 
 #### Accepts queries
 
-- `sort_by`, which sorts the articles by any valid column (defaults to created_at)
+- `sort_by`, which sorts the comments by any valid column (defaults to created_at)
 - `order`, which can be set to `asc` or `desc` for ascending or descending (defaults to descending)
 
 ---
