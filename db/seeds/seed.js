@@ -2,10 +2,10 @@ const {
   topicData,
   articleData,
   commentData,
-  userData
-} = require('../index.js');
+  userData,
+} = require('../data/index.js');
 
-const { formatDate, formatComments, makeRefObj } = require('../utils/utils');
+const { formatDates, formatComments, makeRefObj } = require('../utils/utils');
 
 exports.seed = function(knex, Promise) {
   const topicsInsertions = knex('topics').insert(topicData);
