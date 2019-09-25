@@ -305,9 +305,9 @@ PATCH /api/comments/:comment_id
 
   e.g.
 
-  `{ inc_votes : 1 }` would increment the current article's vote property by 1
+  `{ inc_votes : 1 }` would increment the current comments's vote property by 1
 
-  `{ inc_votes : -1 }` would decrement the current article's vote property by 1
+  `{ inc_votes : -1 }` would decrement the current comments's vote property by 1
 
 #### Responds with
 
