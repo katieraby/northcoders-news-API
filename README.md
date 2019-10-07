@@ -50,7 +50,7 @@ The job of `index.js` in each the data folders is to export out all the data fro
 - `userData`
 - `commentData`
 
-The job of the `db/index.js` file will be to export out of the db folder _only the data relevant to the current environment_. Specifically this file should allow your seed file to access only a specific set of data depending on the environment it's in: test, development or production. To do this is will have to require in all the data and should make use of `process.env` in your `index.js` file to achieve only exporting the right data out.
+The job of the `db/data/index.js` file will be to export out of the db folder _only the data relevant to the current environment_. Specifically this file should allow your seed file to access only a specific set of data depending on the environment it's in: test, development or production. To do this is will have to require in all the data and should make use of `process.env` in your `index.js` file to achieve only exporting the right data out.
 
 **HINT: make sure the keys you export match up with the keys required into the seed file**
 
