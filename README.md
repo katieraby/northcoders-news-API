@@ -353,6 +353,8 @@ GET /api
 
 Make sure your application and your database is hosted using Heroku
 
+See the hosting.md file in this repo for more guidance
+
 ### Step 4 - README
 
 Write a README for your project. Check out this [guide](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for what sort of things should be included.
