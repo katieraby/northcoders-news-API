@@ -64,7 +64,7 @@ You will need to create your migrations and complete the provided seed function 
 
 This is where you will set up the schema for each table in your database.
 
-You should have separate tables for `topics`, `articles`, `users` and `comments`. You will need to think carefully about the order in which you create your migrations.
+You should have separate tables for `topics`, `articles`, `users` and `comments`. You will need to think carefully about the order in which you create your migrations. You should think carefully about whether you require any constraints on your table columns (e.g. 'NOT NULL')
 
 Each topic should have:
 
