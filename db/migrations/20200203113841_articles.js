@@ -10,11 +10,13 @@ exports.up = function(knex) {
     articlesTable.integer("votes").defaultTo(0);
     articlesTable
       .string("topic")
-      .references(topics.slug)
+      .references("slug")
+      .inTable("topics")
       .notNullable();
     articlesTable
       .string("author")
-      .references(users.username)
+      .references("username")
+      .inTable("users")
       .notNullable();
     articlesTable.timestamp("created_at").defaultTo(knex.fn.now());
   });
