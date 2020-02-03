@@ -6,8 +6,11 @@ exports.up = function(knex) {
       .primary()
       .notNullable();
     articlesTable.string("title").notNullable();
-    articlesTable.string("body", 5000).notNullable();
-    articlesTable.integer("votes").defaultTo(0);
+    articlesTable.text("body").notNullable();
+    articlesTable
+      .integer("votes")
+      .defaultTo(0)
+      .notNullable();
     articlesTable
       .string("topic")
       .references("slug")
@@ -18,7 +21,10 @@ exports.up = function(knex) {
       .references("username")
       .inTable("users")
       .notNullable();
-    articlesTable.timestamp("created_at").defaultTo(knex.fn.now());
+    articlesTable
+      .timestamp("created_at")
+      .defaultTo(knex.fn.now())
+      .notNullable();
   });
 };
 

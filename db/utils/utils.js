@@ -2,10 +2,6 @@
 returns new array.
 Each item in array has its timestamp converted to a javascript date object */
 exports.formatDates = list => {
-  if (list.length === 0) {
-    return [];
-  }
-
   let newArray = list.map(obj => {
     let newDate = new Date(obj["created_at"]).toUTCString();
     return { ...obj, ["created_at"]: newDate };
@@ -15,13 +11,11 @@ exports.formatDates = list => {
 
 exports.makeRefObj = (list, title, article_id) => {
   const refObj = {};
-  if (list.length !== 0) {
-    list.forEach(item => {
-      const key = item[title];
-      const val = item[article_id];
-      refObj[key] = val;
-    });
-  }
+  list.forEach(item => {
+    const key = item[title];
+    const val = item[article_id];
+    refObj[key] = val;
+  });
   return refObj;
 };
 
