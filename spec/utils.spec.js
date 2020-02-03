@@ -10,8 +10,8 @@ describe.only("formatDates", () => {
     expect(formatDates([])).to.eql([]);
   });
 
-  it("when passed an array with one object containing a created_at key, converts the miliseconds to date format", () => {
-    const input = [
+  it("when passed an array with one object containing a created_at key, converts the milliseconds to date format", () => {
+    const list = [
       {
         title: "Living in the shadow of a great man",
         topic: "mitch",
@@ -21,19 +21,35 @@ describe.only("formatDates", () => {
         votes: 100
       }
     ];
-    console.log(input[0]["created_at"]);
-    expect(formatDates(input[0]["created_at"])).to.contain("GMT");
+    const output = formatDates(list);
+    expect(output[0]["created_at"]).to.equal("Thu, 15 Nov 2018 12:21:54 GMT");
+  });
+
+  it("when passed an array with multiple objects, converts the created_at value from milliseconds to date format", () => {
+    const list = [
+      {
+        title: "Living in the shadow of a great man",
+        topic: "mitch",
+        author: "butter_bridge",
+        body: "I find this existence challenging",
+        created_at: 1542284514171,
+        votes: 100
+      },
+      {
+        title: "Living in the shadow of a great man",
+        topic: "hello",
+        author: "butter_bridge",
+        body: "I find this existence challenging",
+        created_at: 1540084518901,
+        votes: 80
+      }
+    ];
+
+    const output = formatDates(list);
+    expect(output[0]["created_at"]).to.equal("Thu, 15 Nov 2018 12:21:54 GMT");
+    expect(output[1]["created_at"]).to.equal("Sun, 21 Oct 2018 01:15:18 GMT");
   });
 });
-
-// {
-//   title: 'Living in the shadow of a great man',
-//     topic: 'mitch',
-//       author: 'butter_bridge',
-//         body: 'I find this existence challenging',
-//           created_at: 1542284514171,
-//             votes: 100,
-//   },
 
 describe("makeRefObj", () => {
   it("when passed an empty array, returns an empty object", () => {

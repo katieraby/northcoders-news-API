@@ -2,10 +2,15 @@
 returns new array.
 Each item in array has its timestamp converted to a javascript date object */
 exports.formatDates = list => {
-  //map through list
-  //declare const for miliseconds which is also list["created_at"]
-  //
-  return [];
+  if (list.length === 0) {
+    return [];
+  }
+
+  let newArray = list.map(obj => {
+    let newDate = new Date(obj["created_at"]).toUTCString();
+    return { ...obj, ["created_at"]: newDate };
+  });
+  return newArray;
 };
 
 exports.makeRefObj = (list, title, article_id) => {
