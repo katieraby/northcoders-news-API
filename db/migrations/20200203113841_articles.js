@@ -15,12 +15,14 @@ exports.up = function(knex) {
       .string("topic")
       .references("slug")
       .inTable("topics")
-      .notNullable();
+      .notNullable()
+      .onDelete("CASCADE");
     articlesTable
       .string("author")
       .references("username")
       .inTable("users")
-      .notNullable();
+      .notNullable()
+      .onDelete("CASCADE");
     articlesTable
       .timestamp("created_at")
       .defaultTo(knex.fn.now())

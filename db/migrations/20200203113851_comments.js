@@ -6,12 +6,14 @@ exports.up = function(knex) {
       .string("author")
       .references("username")
       .inTable("users")
-      .notNullable();
+      .notNullable()
+      .onDelete("CASCADE");
     commentsTable
       .integer("article_id")
       .references("article_id")
       .inTable("articles")
-      .notNullable();
+      .notNullable()
+      .onDelete("CASCADE");
     commentsTable
       .integer("votes")
       .defaultTo(0)
