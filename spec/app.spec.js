@@ -35,9 +35,12 @@ describe("/api", () => {
           .get("/api/users/rogersop")
           .expect(200)
           .then(({ body }) => {
-            console.log(body, "bodylog");
-            expect(body.username).to.equal("rogersop");
-            expect(body).to.have.all.keys("username", "avatar_url", "name");
+            expect(body.user[0].username).to.equal("rogersop");
+            expect(body.user[0]).to.have.all.keys(
+              "username",
+              "avatar_url",
+              "name"
+            );
           });
       });
     });
