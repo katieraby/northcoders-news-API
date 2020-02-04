@@ -18,5 +18,13 @@ describe("/api", () => {
           expect(body.topics[0]).to.have.all.keys("slug", "description");
         });
     });
+    it("GET - returns a status 404 - not found, and a message, when the user tries to access an unavailable route", () => {
+      return request(app)
+        .get("/api/topics/cheese")
+        .expect(404)
+        .then(({ err }) => {
+          expect(err.msg).to.equal("Not found");
+        });
+    });
   });
 });
