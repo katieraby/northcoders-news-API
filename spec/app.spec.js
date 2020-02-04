@@ -43,10 +43,10 @@ describe("/api", () => {
           });
       });
 
-      it("GET - returns a status 400 and a message, when the user tries to get data for a user which doesnt exist", () => {
+      it("GET - returns a status 404 and a message, when the user tries to get data for a user which doesnt exist", () => {
         return request(app)
           .get("/api/users/chickendinosaur")
-          .expect(400)
+          .expect(404)
           .then(({ body }) => {
             expect(body.msg).to.equal("No user found for chickendinosaur");
           });
@@ -61,7 +61,6 @@ describe("/api", () => {
           .get("/api/articles/1")
           .expect(200)
           .then(({ body }) => {
-            console.log(body);
             expect(body.article[0].title).to.equal(
               "Living in the shadow of a great man"
             );
@@ -75,6 +74,15 @@ describe("/api", () => {
               "votes",
               "comment_count"
             );
+          });
+      });
+
+      it("GET - returns a status 404 and an error message when passed an article ID that doesnt exist", () => {
+        return request(app)
+          .get("/api/articles/999")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("Article ID does not exist");
           });
       });
     });
