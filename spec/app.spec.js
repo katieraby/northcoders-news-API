@@ -62,8 +62,10 @@ describe("/api", () => {
           .expect(200)
           .then(({ body }) => {
             console.log(body);
-            expect(body.article[0].title).to.equal("RUNNING A NODE APP");
-            expect(body.article).to.have.all.keys(
+            expect(body.article[0].title).to.equal(
+              "Living in the shadow of a great man"
+            );
+            expect(body.article[0]).to.have.all.keys(
               "author",
               "title",
               "article_id",
