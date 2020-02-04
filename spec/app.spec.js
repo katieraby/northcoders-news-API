@@ -4,10 +4,9 @@ const { expect } = require("chai");
 const request = require("supertest");
 const knex = require("../db/connection");
 
-after(() => knex.destroy());
-
 describe("/api", () => {
   beforeEach(() => knex.seed.run());
+  after(() => knex.destroy());
   describe("/topics", () => {
     it("GET - returns a 200 status code an an array of topic objects with slug and description properties", () => {
       return request(app)
@@ -41,6 +40,15 @@ describe("/api", () => {
               "avatar_url",
               "name"
             );
+          });
+      });
+
+      it("GET - returns a status 400 and a message, when the user tries to get data for a user which doesnt exist", () => {
+        return request(app)
+          .get("/api/users/chickendinosaur")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("No user found for chickendinosaur");
           });
       });
     });
