@@ -17,14 +17,6 @@ describe("/api", () => {
           expect(body.topics[0]).to.have.all.keys("slug", "description");
         });
     });
-    // it("GET - returns a status 404 - not found, and a message, when the user tries to access an unavailable route", () => {
-    //   return request(app)
-    //     .get("/api/topics/cheese")
-    //     .expect(404)
-    //     .then(({ err }) => {
-    //       expect(err.msg).to.equal("Not found");
-    //     });
-    // });
   });
 
   describe("/users", () => {
@@ -82,7 +74,16 @@ describe("/api", () => {
           .get("/api/articles/999")
           .expect(404)
           .then(({ body }) => {
-            expect(body.msg).to.equal("Article ID does not exist");
+            expect(body.msg).to.equal("Article ID 999 does not exist");
+          });
+      });
+
+      it("GET - returns a status 400 and an error message when passed an article ID in the wrong format i.e. chars instead of numbers", () => {
+        return request(app)
+          .get("/api/articles/cat")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("Invalid input -- must be an integer");
           });
       });
     });

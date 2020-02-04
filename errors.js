@@ -9,9 +9,9 @@ const customErrorHandler = (err, req, res, next) => {
 const pSQLErrorHandling = (err, req, res, next) => {
   if (err.code !== undefined) {
     const pSQLErrors = {
-      23505: {
+      "22P02": {
         status: 400,
-        msg: "duplicate key value violates unique constraint"
+        msg: "Invalid input -- must be an integer"
       }
     };
     res

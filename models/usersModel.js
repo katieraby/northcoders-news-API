@@ -8,7 +8,7 @@ exports.fetchUserByUsername = username => {
     .then(user => {
       if (user.length === 0) {
         return Promise.reject({
-          status: 400,
+          status: 404,
           msg: `No user found for ${username}`
         });
       } else {

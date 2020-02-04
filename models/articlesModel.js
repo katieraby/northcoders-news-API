@@ -14,9 +14,15 @@ exports.fetchArticleById = article_id => {
 
   return Promise.all([fetchedArticle, fetchedComments]).then(
     ([fetchedArticle, fetchedComments]) => {
-      //fetchedComments.length is how many comments with that article id so need to place that inside the returned article
-      fetchedArticle[0].comment_count = fetchedComments.length;
-      return { article: fetchedArticle };
+      if (fetchedArticle.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: `Article ID ${article_id} does not exist`
+        });
+      } else {
+        fetchedArticle[0].comment_count = fetchedComments.length;
+        return { article: fetchedArticle };
+      }
     }
   );
 };
