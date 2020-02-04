@@ -27,7 +27,7 @@ describe("/api", () => {
     // });
   });
 
-  describe.only("/users", () => {
+  describe("/users", () => {
     describe("/:username", () => {
       it("GET returns a status 200 and a user object when parametric username endpoint is accessed", () => {
         return request(app)
@@ -49,6 +49,30 @@ describe("/api", () => {
           .expect(400)
           .then(({ body }) => {
             expect(body.msg).to.equal("No user found for chickendinosaur");
+          });
+      });
+    });
+  });
+
+  describe.only("/articles", () => {
+    describe("/articles/:article_id", () => {
+      it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
+        return request(app)
+          .get("/api/articles/1")
+          .expect(200)
+          .then(({ body }) => {
+            console.log(body);
+            expect(body.article[0].title).to.equal("RUNNING A NODE APP");
+            expect(body.article).to.have.all.keys(
+              "author",
+              "title",
+              "article_id",
+              "body",
+              "topic",
+              "created_at",
+              "votes",
+              "comment_count"
+            );
           });
       });
     });

@@ -7,7 +7,6 @@ exports.getUserByUsername = (req, res, next) => {
       res.status(200).send(user);
     })
     .catch(err => {
-      console.log("in the catch block");
       next(err);
     });
 };
