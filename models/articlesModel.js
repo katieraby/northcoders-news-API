@@ -1,6 +1,5 @@
 const knex = require("../db/connection");
 
-//also want to query the comments table which has the article id on each comment to see how many come back then add that to the article object retrieved initially, so will need to promise all with the comments and articles retrieved to add the comment count to articles
 exports.fetchArticleById = article_id => {
   const fetchedArticle = knex
     .select("*")
@@ -25,4 +24,20 @@ exports.fetchArticleById = article_id => {
       }
     }
   );
+};
+//check if votes num is positive or negative then use the increment or decrement knex query
+exports.updateArticleById = (votes, article_id) => {
+  if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
+    return knex("articles")
+      .increment("votes", votes)
+      .where({ article_id })
+      .returning("*");
+  } else {
+    let positiveVotes = Math.abs(votes);
+    return knex("articles")
+      .decrement("votes", positiveVotes)
+      .where({ article_id })
+      .returning("*");
+  }
+  //update the votes first then call fetch article by the same id
 };

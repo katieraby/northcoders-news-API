@@ -86,6 +86,15 @@ describe("/api", () => {
             expect(body.msg).to.equal("Invalid input -- must be an integer");
           });
       });
+      it("PATCH - returns a status 200 and the updated article with votes increased when passed an object with a positive number of votes to add", () => {
+        return request(app)
+          .patch("/api/articles/1")
+          .send({ inc_votes: 10 })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.article[0].votes).to.equal(110);
+          });
+      });
     });
   });
 });
