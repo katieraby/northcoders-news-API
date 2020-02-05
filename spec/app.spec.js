@@ -107,7 +107,7 @@ describe("/api", () => {
           });
       });
 
-      it("PATCH - returns a status 400 and a bad request - empty body message when the body is empty -- no inc_votes can be found", () => {
+      it("PATCH - returns a status 400 and a bad request - incorrect input message when the body is empty -- no inc_votes can be found", () => {
         return request(app)
           .patch("/api/articles/3")
           .send({})
@@ -118,9 +118,28 @@ describe("/api", () => {
             );
           });
       });
+
+      it("PATCH - returns a status 400 and an incorrect input message when the value of inc_votes is a format another than a number", () => {
+        return request(app)
+          .patch("/api/articles/4")
+          .send({ inc_votes: "cat" })
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal(
+              "Bad request - incorrect input for update"
+            );
+          });
+      });
+
+      it("PATCH - returns a status 200 and the updated article, even when there is more than one property on the request body", () => {
+        return request(app)
+          .patch("/api/articles/1")
+          .send({ inc_votes: 1, name: "Mitch" })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.article[0].votes).to.equal(101);
+          });
+      });
     });
   });
 });
-
-//   - Invalid`inc_votes`(e.g. `{ inc_votes : "cat" }`)
-//   - Some other property on request body(e.g. `{ inc_votes : 1, name: 'Mitch' }`)

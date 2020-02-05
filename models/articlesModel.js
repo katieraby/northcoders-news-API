@@ -27,7 +27,10 @@ exports.fetchArticleById = article_id => {
 };
 
 exports.updateArticleById = (req, article_id) => {
-  if (req.body.hasOwnProperty("inc_votes")) {
+  if (
+    req.body.hasOwnProperty("inc_votes") &&
+    typeof req.body.inc_votes === "number"
+  ) {
     const { inc_votes: votes } = req.body;
     if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
       return knex("articles")
