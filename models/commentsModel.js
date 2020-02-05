@@ -25,3 +25,9 @@ exports.updateCommentById = (req, comment_id) => {
     });
   }
 };
+
+exports.removeCommentById = comment_id => {
+  return knex("comments")
+    .delete()
+    .where({ comment_id });
+};

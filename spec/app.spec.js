@@ -206,6 +206,12 @@ describe("/api", () => {
             );
           });
       });
+
+      it("DELETE - responds with a 204 status code, and deletes the specified comment by ID", () => {
+        return request(app)
+          .delete("/api/comments/2")
+          .expect(204);
+      });
     });
   });
 });
