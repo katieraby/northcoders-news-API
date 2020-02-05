@@ -29,5 +29,10 @@ exports.updateCommentById = (req, comment_id) => {
 exports.removeCommentById = comment_id => {
   return knex("comments")
     .delete()
-    .where({ comment_id });
+    .where({ comment_id })
+    .then(rowCount => {
+      if (rowCount === 0) {
+        return Promise.reject({ status: 404, msg: "Comment ID not found" });
+      }
+    });
 };
