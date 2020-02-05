@@ -46,7 +46,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     describe("/articles/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
@@ -138,6 +138,72 @@ describe("/api", () => {
           .expect(200)
           .then(({ body }) => {
             expect(body.article[0].votes).to.equal(101);
+          });
+      });
+    });
+  });
+
+  describe.only("/comments", () => {
+    describe("/:comment_id", () => {
+      it("PATCH - returns a status 200 and the updated comment when passed a number of votes (positive) by which to increment the vote count", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: 1 })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.comment[0].votes).to.equal(17);
+            expect(body.comment[0]).to.have.all.keys(
+              "comment_id",
+              "author",
+              "article_id",
+              "votes",
+              "created_at",
+              "body"
+            );
+          });
+      });
+
+      it("PATCH - returns a status 200 and the udpated comment with votes decreased when passed an object with a number of votes to decrease", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: -1 })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.comment[0].votes).to.equal(15);
+          });
+      });
+
+      it("PATCH - returns a status 200 and the updated comment, even when there is more than one property on the request body", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: 11, name: "Katie" })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.comment[0].votes).to.equal(27);
+          });
+      });
+
+      it("PATCH - returns a status 400 and an incorrect input message when the value of inc_votes is a format another than a number", () => {
+        return request(app)
+          .patch("/api/comments/5")
+          .send({ inc_votes: "cat" })
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal(
+              "Bad request - incorrect input for update"
+            );
+          });
+      });
+
+      it("PATCH - returns a status 400 and a bad request - incorrect input message when the body is empty -- no inc_votes can be found", () => {
+        return request(app)
+          .patch("/api/comments/3")
+          .send({})
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal(
+              "Bad request - incorrect input for update"
+            );
           });
       });
     });
