@@ -106,6 +106,21 @@ describe("/api", () => {
             expect(body.article[0].votes).to.equal(50);
           });
       });
+
+      it("PATCH - returns a status 400 and a bad request - empty body message when the body is empty -- no inc_votes can be found", () => {
+        return request(app)
+          .patch("/api/articles/3")
+          .send({})
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal(
+              "Bad request - incorrect input for update"
+            );
+          });
+      });
     });
   });
 });
+
+//   - Invalid`inc_votes`(e.g. `{ inc_votes : "cat" }`)
+//   - Some other property on request body(e.g. `{ inc_votes : 1, name: 'Mitch' }`)

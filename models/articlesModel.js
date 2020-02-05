@@ -26,17 +26,25 @@ exports.fetchArticleById = article_id => {
   );
 };
 
-exports.updateArticleById = (votes, article_id) => {
-  if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
-    return knex("articles")
-      .increment("votes", votes)
-      .where({ article_id })
-      .returning("*");
+exports.updateArticleById = (req, article_id) => {
+  if (req.body.hasOwnProperty("inc_votes")) {
+    const { inc_votes: votes } = req.body;
+    if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
+      return knex("articles")
+        .increment("votes", votes)
+        .where({ article_id })
+        .returning("*");
+    } else {
+      let positiveVotes = Math.abs(votes);
+      return knex("articles")
+        .decrement("votes", positiveVotes)
+        .where({ article_id })
+        .returning("*");
+    }
   } else {
-    let positiveVotes = Math.abs(votes);
-    return knex("articles")
-      .decrement("votes", positiveVotes)
-      .where({ article_id })
-      .returning("*");
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request - incorrect input for update"
+    });
   }
 };
