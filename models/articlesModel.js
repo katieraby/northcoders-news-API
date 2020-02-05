@@ -25,7 +25,7 @@ exports.fetchArticleById = article_id => {
     }
   );
 };
-//check if votes num is positive or negative then use the increment or decrement knex query
+
 exports.updateArticleById = (votes, article_id) => {
   if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
     return knex("articles")
@@ -39,5 +39,4 @@ exports.updateArticleById = (votes, article_id) => {
       .where({ article_id })
       .returning("*");
   }
-  //update the votes first then call fetch article by the same id
 };
