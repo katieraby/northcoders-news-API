@@ -43,7 +43,11 @@ exports.postCommentByArticleId = (req, res, next) => {
 
 exports.getCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
-  fetchCommentsByArticleId(article_id).then(fetchedComments => {
-    res.status(200).send(fetchedComments);
-  });
+  fetchCommentsByArticleId(article_id, req.query)
+    .then(fetchedComments => {
+      res.status(200).send(fetchedComments);
+    })
+    .catch(err => {
+      next(err);
+    });
 };

@@ -189,7 +189,7 @@ describe("/api", () => {
           });
       });
 
-      describe("/comments", () => {
+      describe.only("/comments", () => {
         it("POST - responds with a status 201 and the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")
@@ -287,15 +287,37 @@ describe("/api", () => {
             });
         });
 
-        it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query", () => {
+        it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query, defaulting to descending order", () => {
           return request(app)
-            .get("/api/articles/2/comments/?sort_by=created_at")
+            .get("/api/articles/1/comments?sort_by=created_at")
             .expect(200)
             .then(({ body }) => {
               const { comments } = body;
-              expect(comments).to.be.sortedBy("created_at");
+              expect(comments).to.be.descendingBy("created_at");
             });
         });
+
+        it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query, and an order query of ascending", () => {
+          return request(app)
+            .get("/api/articles/1/comments?order=asc")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.ascendingBy("created_at");
+            });
+        });
+
+        it("GET - returns a status 200 and an array of comments sorted by votes when passed a sort_by query, defaulting to descending order", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=votes")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.descendingBy("votes");
+            });
+        });
+
+        it("GET - returns a status 200 and an array of comments sorted default by created_at, when only passed an order_b", () => {});
 
         describe("INVALID METHODS", () => {
           it("Status:405", () => {

@@ -91,10 +91,13 @@ exports.createCommentByArticleId = (req, article_id) => {
   });
 };
 
-exports.fetchCommentsByArticleId = article_id => {
+exports.fetchCommentsByArticleId = (article_id, query) => {
+  if (!query.sort_by) query.sort_by = "created_at";
+  if (query.order === undefined) query.order = "desc";
   return knex("comments")
     .select("*")
     .where({ article_id })
+    .orderBy(query.sort_by, query.order)
     .then(returnedComments => {
       const formattedComments = returnedComments.map(comment => {
         delete comment.article_id;
