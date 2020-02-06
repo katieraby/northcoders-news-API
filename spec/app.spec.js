@@ -162,6 +162,66 @@ describe("/api", () => {
               expect(body.comment[0].author).to.equal("rogersop");
             });
         });
+
+        it("POST - responds with a status 404 when the passed article ID does not exist", () => {
+          return request(app)
+            .post("/api/articles/999/comments")
+            .send({
+              username: "rogersop",
+              body: "Hello world, my first comment"
+            })
+            .expect(404)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Article ID 999 does not exist");
+            });
+        });
+
+        it("POST - responds with a status 400 when there are keys missing from the body", () => {
+          return request(app)
+            .post("/api/articles/3/comments")
+            .send({
+              username: "rogersop"
+            })
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Bad request - incorrect input");
+            });
+        });
+
+        it("POST - responds with a status 201 and the posted comment even when there are additional keys on the request body", () => {
+          return request(app)
+            .post("/api/articles/3/comments")
+            .send({
+              username: "rogersop",
+              body: "Hello world, my first comment",
+              favouriteFood: "pizza"
+            })
+            .expect(201)
+            .then(({ body }) => {
+              expect(body.comment[0]).to.have.all.keys(
+                "comment_id",
+                "author",
+                "article_id",
+                "votes",
+                "created_at",
+                "body"
+              );
+              expect(body.comment[0].author).to.equal("rogersop");
+            });
+        });
+
+        it("POST - returns a status 404, and a username not found message, when the username passed into the body doesnt exist", () => {
+          return request(app)
+            .post("/api/articles/2/comments")
+            .send({
+              username: "turkeydinosaurs",
+              body: "Hello world, my first comment"
+            })
+            .expect(404)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Username not found");
+            });
+        });
       });
     });
   });
@@ -256,3 +316,5 @@ describe("/api", () => {
     });
   });
 });
+
+//if nothing passed in, default

@@ -53,14 +53,60 @@ exports.updateArticleById = (req, article_id) => {
 };
 
 exports.createCommentByArticleId = (req, article_id) => {
-  req.body.article_id = article_id;
-  req.body.author = req.body.username;
-  delete req.body.username;
-  return knex
-    .insert(req.body)
-    .into("comments")
-    .returning("*")
-    .then(result => {
-      return result;
+  return Promise.all([
+    req,
+    this.checkArticleExists(article_id),
+    this.checkUsernameExists(req.body.username)
+  ]).then(([req, articleExists, usernameExists]) => {
+    if (!articleExists) {
+      return Promise.reject({
+        status: 404,
+        msg: `Article ID ${article_id} does not exist`
+      });
+    }
+
+    if (!usernameExists) {
+      return Promise.reject({ status: 404, msg: "Username not found" });
+    }
+
+    if (articleExists && usernameExists) {
+      const { body } = req.body;
+      const { username } = req.body;
+
+      if (body === undefined || username === undefined) {
+        return Promise.reject({
+          status: 400,
+          msg: "Bad request - incorrect input"
+        });
+      }
+
+      return knex
+        .insert({ author: username, body, article_id })
+        .into("comments")
+        .returning("*")
+        .then(result => {
+          return result;
+        });
+    }
+  });
+};
+
+exports.checkArticleExists = article_id => {
+  return knex("articles")
+    .select("*")
+    .where({ article_id })
+    .then(articleRows => {
+      if (articleRows.length === 0) return false;
+      else return true;
+    });
+};
+
+exports.checkUsernameExists = username => {
+  return knex("users")
+    .select("*")
+    .where({ username })
+    .then(userRows => {
+      if (userRows.length === 0) return false;
+      else return true;
     });
 };
