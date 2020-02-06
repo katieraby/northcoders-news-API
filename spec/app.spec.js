@@ -222,6 +222,22 @@ describe("/api", () => {
               expect(body.msg).to.equal("Username not found");
             });
         });
+
+        it("GET - returns a status 200 and an array of comments", () => {
+          return request(app)
+            .get("/api/articles/1/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).to.be.an("array");
+              expect(body.comments[0]).to.have.all.keys(
+                "comment_id",
+                "votes",
+                "created_at",
+                "author",
+                "body"
+              );
+            });
+        });
       });
     });
   });

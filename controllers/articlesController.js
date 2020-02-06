@@ -1,7 +1,8 @@
 const {
   fetchArticleById,
   updateArticleById,
-  createCommentByArticleId
+  createCommentByArticleId,
+  fetchCommentsByArticleId
 } = require("../models/articlesModel");
 
 exports.getArticleById = (req, res, next) => {
@@ -31,11 +32,6 @@ exports.patchArticleById = (req, res, next) => {
 
 exports.postCommentByArticleId = (req, res, next) => {
   const { article_id } = req.params;
-  // if (
-  //   Object.keys(req).length === 2 &&
-  //   req.hasOwnProperty("username") &&
-  //   req.hasOwnProperty("body")
-  // )
   createCommentByArticleId(req, article_id)
     .then(returnedComment => {
       res.status(201).send({ comment: returnedComment });
@@ -43,4 +39,11 @@ exports.postCommentByArticleId = (req, res, next) => {
     .catch(err => {
       next(err);
     });
+};
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const { article_id } = req.params;
+  fetchCommentsByArticleId(article_id).then(fetchedComments => {
+    res.status(200).send(fetchedComments);
+  });
 };

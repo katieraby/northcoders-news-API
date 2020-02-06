@@ -91,6 +91,19 @@ exports.createCommentByArticleId = (req, article_id) => {
   });
 };
 
+exports.fetchCommentsByArticleId = article_id => {
+  return knex("comments")
+    .select("*")
+    .where({ article_id })
+    .then(returnedComments => {
+      const formattedComments = returnedComments.map(comment => {
+        delete comment.article_id;
+        return comment;
+      });
+      return { comments: formattedComments };
+    });
+};
+
 exports.checkArticleExists = article_id => {
   return knex("articles")
     .select("*")
