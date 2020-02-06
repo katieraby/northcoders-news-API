@@ -20,8 +20,21 @@ const pSQLErrorHandling = (err, req, res, next) => {
   } else next(err);
 };
 
-const genericErrorHandler = (err, req, res, next) => {
-  res.status(500).send({ msg: "Internal server error" });
+const serverErrorHandler = (err, req, res, next) => {
+  if (err.status === 500) {
+    res.status(500).send({ msg: "Internal server error" });
+  } else {
+    next(err);
+  }
 };
 
-module.exports = { customErrorHandler, pSQLErrorHandling, genericErrorHandler };
+const send405Error = (req, res, next) => {
+  res.status(405).send({ msg: "Method not allowed" });
+};
+
+module.exports = {
+  customErrorHandler,
+  pSQLErrorHandling,
+  serverErrorHandler,
+  send405Error
+};

@@ -1,8 +1,11 @@
 process.env.NODE_ENV = "test";
 const app = require("../app");
-const { expect } = require("chai");
 const request = require("supertest");
 const knex = require("../db/connection");
+const chai = require("chai");
+const chaiSorted = require("chai-sorted");
+chai.use(chaiSorted);
+const { expect } = chai;
 
 describe("/api", () => {
   beforeEach(() => knex.seed.run());
@@ -16,6 +19,21 @@ describe("/api", () => {
           expect(body.topics).to.be.an("array");
           expect(body.topics[0]).to.have.all.keys("slug", "description");
         });
+    });
+
+    describe("INVALID METHODS", () => {
+      it("Status:405", () => {
+        const invalidMethods = ["patch", "post", "delete"];
+        const methodPromises = invalidMethods.map(method => {
+          return request(app)
+            [method]("/api/topics")
+            .expect(405)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Method not allowed");
+            });
+        });
+        return Promise.all(methodPromises);
+      });
     });
   });
 
@@ -42,6 +60,36 @@ describe("/api", () => {
           .then(({ body }) => {
             expect(body.msg).to.equal("No user found for chickendinosaur");
           });
+      });
+
+      describe("INVALID METHODS", () => {
+        it("Status:405", () => {
+          const invalidMethods = ["patch", "post", "delete"];
+          const methodPromises = invalidMethods.map(method => {
+            return request(app)
+              [method]("/api/users/:username")
+              .expect(405)
+              .then(({ body }) => {
+                expect(body.msg).to.equal("Method not allowed");
+              });
+          });
+          return Promise.all(methodPromises);
+        });
+      });
+    });
+
+    describe("INVALID METHODS", () => {
+      it("Status:405", () => {
+        const invalidMethods = ["get", "patch", "post", "delete"];
+        const methodPromises = invalidMethods.map(method => {
+          return request(app)
+            [method]("/api/users")
+            .expect(405)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Method not allowed");
+            });
+        });
+        return Promise.all(methodPromises);
       });
     });
   });
@@ -141,7 +189,7 @@ describe("/api", () => {
           });
       });
 
-      describe.only("/comments", () => {
+      describe("/comments", () => {
         it("POST - responds with a status 201 and the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")
@@ -238,6 +286,61 @@ describe("/api", () => {
               );
             });
         });
+
+        it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query", () => {
+          return request(app)
+            .get("/api/articles/2/comments/?sort_by=created_at")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.sortedBy("created_at");
+            });
+        });
+
+        describe("INVALID METHODS", () => {
+          it("Status:405", () => {
+            const invalidMethods = ["patch", "delete"];
+            const methodPromises = invalidMethods.map(method => {
+              return request(app)
+                [method]("/api/articles/:article_id/comments")
+                .expect(405)
+                .then(({ body }) => {
+                  expect(body.msg).to.equal("Method not allowed");
+                });
+            });
+            return Promise.all(methodPromises);
+          });
+        });
+      });
+
+      describe("INVALID METHODS", () => {
+        it("Status:405", () => {
+          const invalidMethods = ["post", "delete"];
+          const methodPromises = invalidMethods.map(method => {
+            return request(app)
+              [method]("/api/articles/:article_id")
+              .expect(405)
+              .then(({ body }) => {
+                expect(body.msg).to.equal("Method not allowed");
+              });
+          });
+          return Promise.all(methodPromises);
+        });
+      });
+    });
+
+    describe("INVALID METHODS", () => {
+      it("Status:405", () => {
+        const invalidMethods = ["get", "patch", "post", "delete"];
+        const methodPromises = invalidMethods.map(method => {
+          return request(app)
+            [method]("/api/articles")
+            .expect(405)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Method not allowed");
+            });
+        });
+        return Promise.all(methodPromises);
       });
     });
   });
@@ -332,5 +435,3 @@ describe("/api", () => {
     });
   });
 });
-
-//if nothing passed in, default
