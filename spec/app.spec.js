@@ -189,7 +189,7 @@ describe("/api", () => {
           });
       });
 
-      describe.only("/comments", () => {
+      describe("/comments", () => {
         it("POST - responds with a status 201 and the posted comment", () => {
           return request(app)
             .post("/api/articles/1/comments")
@@ -287,6 +287,24 @@ describe("/api", () => {
             });
         });
 
+        it("GET - returns a 200 status code and an empty array when the article exists but has no comments", () => {
+          return request(app)
+            .get("/api/articles/2/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body).to.eql([]);
+            });
+        });
+
+        it("GET - returns a 404 status code and an error message when the article ID doesnt exist", () => {
+          return request(app)
+            .get("/api/articles/9999/comments")
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).to.equal("Invalid article ID provided");
+            });
+        });
+
         it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query, defaulting to descending order", () => {
           return request(app)
             .get("/api/articles/1/comments?sort_by=created_at")
@@ -299,7 +317,7 @@ describe("/api", () => {
 
         it("GET - returns a status 200 and an array of comments sorted by created_at when passed a sort_by query, and an order query of ascending", () => {
           return request(app)
-            .get("/api/articles/1/comments?order=asc")
+            .get("/api/articles/1/comments?sort_by=created_at&order=asc")
             .expect(200)
             .then(({ body }) => {
               const { comments } = body;
@@ -317,7 +335,35 @@ describe("/api", () => {
             });
         });
 
-        it("GET - returns a status 200 and an array of comments sorted default by created_at, when only passed an order_b", () => {});
+        it("GET - returns a status 200 and an array of comments sorted default by created_at, when only passed an order query", () => {
+          return request(app)
+            .get("/api/articles/1/comments?order=asc")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.ascendingBy("created_at");
+            });
+        });
+
+        it("GET - returns a status 200 and the comments sorted in the default order when passed an invalid order query", () => {
+          return request(app)
+            .get("/api/articles/1/comments?order=fruit")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.descendingBy("created_at");
+            });
+        });
+
+        it("GET - returns a status 200 and the comments sorted by created_at when passed an invalid sort_by query", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=dragons")
+            .expect(200)
+            .then(({ body }) => {
+              const { comments } = body;
+              expect(comments).to.be.descendingBy("created_at");
+            });
+        });
 
         describe("INVALID METHODS", () => {
           it("Status:405", () => {

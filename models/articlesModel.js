@@ -92,18 +92,42 @@ exports.createCommentByArticleId = (req, article_id) => {
 };
 
 exports.fetchCommentsByArticleId = (article_id, query) => {
-  if (!query.sort_by) query.sort_by = "created_at";
-  if (query.order === undefined) query.order = "desc";
+  if (
+    ["comment_id", "votes", "created_at", "author", "body"].indexOf(
+      query.sort_by
+    ) === -1
+  ) {
+    query.sort_by = "created_at";
+  }
+
+  if (query.order !== "asc") query.order = "desc";
   return knex("comments")
     .select("*")
     .where({ article_id })
     .orderBy(query.sort_by, query.order)
     .then(returnedComments => {
-      const formattedComments = returnedComments.map(comment => {
-        delete comment.article_id;
-        return comment;
-      });
-      return { comments: formattedComments };
+      return Promise.all([
+        returnedComments,
+        this.checkArticleExists(article_id)
+      ]);
+    })
+    .then(([returnedComments, articleExists]) => {
+      if (articleExists) {
+        if (returnedComments.length === 0) {
+          return [];
+        }
+
+        const formattedComments = returnedComments.map(comment => {
+          delete comment.article_id;
+          return comment;
+        });
+        return { comments: formattedComments };
+      } else {
+        return Promise.reject({
+          status: 400,
+          msg: "Invalid article ID provided"
+        });
+      }
     });
 };
 
@@ -125,4 +149,8 @@ exports.checkUsernameExists = username => {
       if (userRows.length === 0) return false;
       else return true;
     });
+};
+
+exports.fetchAllArticles = () => {
+  console.log("in the model");
 };
