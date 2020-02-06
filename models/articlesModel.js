@@ -51,3 +51,16 @@ exports.updateArticleById = (req, article_id) => {
     });
   }
 };
+
+exports.createCommentByArticleId = (req, article_id) => {
+  req.body.article_id = article_id;
+  req.body.author = req.body.username;
+  delete req.body.username;
+  return knex
+    .insert(req.body)
+    .into("comments")
+    .returning("*")
+    .then(result => {
+      return result;
+    });
+};

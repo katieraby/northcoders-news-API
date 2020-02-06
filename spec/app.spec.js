@@ -47,7 +47,7 @@ describe("/api", () => {
   });
 
   describe("/articles", () => {
-    describe("/articles/:article_id", () => {
+    describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
           .get("/api/articles/1")
@@ -140,10 +140,33 @@ describe("/api", () => {
             expect(body.article[0].votes).to.equal(101);
           });
       });
+
+      describe.only("/comments", () => {
+        it("POST - responds with a status 201 and the posted comment", () => {
+          return request(app)
+            .post("/api/articles/1/comments")
+            .send({
+              username: "rogersop",
+              body: "Hello world, my first comment"
+            })
+            .expect(201)
+            .then(({ body }) => {
+              expect(body.comment[0]).to.have.all.keys(
+                "comment_id",
+                "author",
+                "article_id",
+                "votes",
+                "created_at",
+                "body"
+              );
+              expect(body.comment[0].author).to.equal("rogersop");
+            });
+        });
+      });
     });
   });
 
-  describe.only("/comments", () => {
+  describe("/comments", () => {
     describe("/:comment_id", () => {
       it("PATCH - returns a status 200 and the updated comment when passed a number of votes (positive) by which to increment the vote count", () => {
         return request(app)
@@ -219,6 +242,15 @@ describe("/api", () => {
           .expect(404)
           .then(({ body }) => {
             expect(body.msg).to.equal("Comment ID not found");
+          });
+      });
+
+      it("DELETE - responds with a 400 status code when the passed ID is in the wrong format i.e. nine instead of 9", () => {
+        return request(app)
+          .delete("/api/comments/nine")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("Invalid input -- must be an integer");
           });
       });
     });
