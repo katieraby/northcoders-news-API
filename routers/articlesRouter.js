@@ -9,11 +9,13 @@ const {
 articlesRouter
   .route("/:article_id")
   .get(getArticleById)
-  .patch(patchArticleById);
+  .patch(patchArticleById)
+  .all(send405Error);
 
 articlesRouter
   .route("/:article_id/comments")
   .post(postCommentByArticleId)
-  .get(getCommentsByArticleId);
+  .get(getCommentsByArticleId)
+  .all(send405Error);
 
 module.exports = articlesRouter;
