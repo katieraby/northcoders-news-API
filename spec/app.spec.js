@@ -23,7 +23,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["patch", "post", "delete"];
+        const invalidMethods = ["patch", "post", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/topics")
@@ -64,7 +64,7 @@ describe("/api", () => {
 
       describe("INVALID METHODS", () => {
         it("Status:405", () => {
-          const invalidMethods = ["patch", "post", "delete"];
+          const invalidMethods = ["patch", "post", "put", "delete"];
           const methodPromises = invalidMethods.map(method => {
             return request(app)
               [method]("/api/users/:username")
@@ -80,7 +80,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["get", "patch", "post", "delete"];
+        const invalidMethods = ["get", "patch", "post", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/users")
@@ -315,7 +315,7 @@ describe("/api", () => {
 
       describe("INVALID METHODS", () => {
         it("Status:405", () => {
-          const invalidMethods = ["post", "delete"];
+          const invalidMethods = ["post", "delete", "put"];
           const methodPromises = invalidMethods.map(method => {
             return request(app)
               [method]("/api/articles/:article_id")
@@ -331,7 +331,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["get", "patch", "post", "delete"];
+        const invalidMethods = ["get", "patch", "post", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/articles")
