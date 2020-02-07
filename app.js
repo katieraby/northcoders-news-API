@@ -5,11 +5,13 @@ const {
   customErrorHandler,
   pSQLErrorHandling,
   serverErrorHandler,
-  send405Error
+  send405Error,
+  noSuchRoute
 } = require("./errors");
 app.use(express.json());
 
 app.use("/api", apiRouter);
+app.all("/*", noSuchRoute);
 
 app.use(customErrorHandler);
 app.use(pSQLErrorHandling);

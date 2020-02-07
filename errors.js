@@ -14,7 +14,7 @@ const pSQLErrorHandling = (err, req, res, next) => {
         msg: "Invalid input -- must be an integer"
       },
       "42703": {
-        status: 404,
+        status: 400,
         msg: "Invalid input on query"
       }
     };
@@ -32,9 +32,14 @@ const send405Error = (req, res, next) => {
   res.status(405).send({ msg: "Method not allowed" });
 };
 
+const noSuchRoute = (req, res, next) => {
+  res.status(404).send({ msg: "Route not allowed" });
+};
+
 module.exports = {
   customErrorHandler,
   pSQLErrorHandling,
   serverErrorHandler,
-  send405Error
+  send405Error,
+  noSuchRoute
 };
