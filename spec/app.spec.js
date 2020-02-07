@@ -116,14 +116,14 @@ describe("/api", () => {
 
     it("GET - returns a status 200 and all articles sorted by author in ascending order when passed an author sort by and ascending order by query", () => {
       return request(app)
-        .get("/api/articles?sort_by=author&order=asc")
+        .get("/api/articles?sort_by=title&order=asc")
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.ascendingBy("author");
+          expect(body.articles).to.be.ascendingBy("title");
         });
     });
 
-    it("GET - returns a status and an error message when passed an invalid sort by query", () => {
+    it("GET - returns a status 404 and an error message when passed an invalid sort by query", () => {
       return request(app)
         .get("/api/articles?sort_by=dragons")
         .expect(404)
@@ -131,6 +131,28 @@ describe("/api", () => {
           expect(body.msg).to.equal("Invalid input on query");
         });
     });
+
+    it("GET - returns a status 200 and all articles default sorted by created_at, and filtered by author when passed an author in the query ", () => {
+      return request(app)
+        .get("/api/articles?author=rogersop")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.descendingBy("created_at");
+          expect(body.articles[0].author).to.equal("rogersop");
+        });
+    });
+
+    it("GET - returns a status 200 and all articles filtered by topic when passed a topic in the query, default sorted by created_at and descending", () => {
+      return request(app)
+        .get("/api/articles?topic=cats")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.descendingBy("created_at");
+          expect(body.articles[0].topic).to.equal("cats");
+        });
+    });
+
+    //where there is an invalid author passed
 
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
@@ -309,7 +331,7 @@ describe("/api", () => {
         it("GET - returns a 404 status code and an error message when the article ID doesnt exist", () => {
           return request(app)
             .get("/api/articles/9999/comments")
-            .expect(400)
+            .expect(404)
             .then(({ body }) => {
               expect(body.msg).to.equal("Invalid article ID provided");
             });

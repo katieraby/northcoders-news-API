@@ -98,7 +98,7 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
         return { comments: formattedComments };
       } else {
         return Promise.reject({
-          status: 400,
+          status: 404,
           msg: "Invalid article ID provided"
         });
       }
@@ -131,6 +131,15 @@ exports.fetchAllArticles = query => {
   return knex
     .select("articles.*")
     .from("articles")
+    .modify(queryRequest => {
+      if (query.author !== undefined) {
+        queryRequest.where("articles.author", query.author);
+      }
+
+      if (query.topic !== undefined) {
+        queryRequest.where("articles.topic", query.topic);
+      }
+    })
     .leftJoin("comments", "comments.article_id", "articles.article_id")
     .groupBy("articles.article_id")
     .count({ comment_count: "comments" })
