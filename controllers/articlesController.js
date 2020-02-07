@@ -19,7 +19,8 @@ exports.getArticleById = (req, res, next) => {
 
 exports.patchArticleById = (req, res, next) => {
   const { article_id } = req.params;
-  updateArticleById(req, article_id)
+  const { inc_votes } = req.body;
+  updateArticleById(inc_votes, article_id)
     .then(() => {
       return fetchArticleById(article_id);
     })
@@ -54,8 +55,10 @@ exports.getCommentsByArticleId = (req, res, next) => {
 };
 
 exports.getAllArticles = (req, res, next) => {
-  fetchAllArticles()
-    .then(articles => {})
+  fetchAllArticles(req.query)
+    .then(articles => {
+      res.status(200).send({ articles: articles });
+    })
     .catch(err => {
       next(err);
     });

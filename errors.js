@@ -12,6 +12,10 @@ const pSQLErrorHandling = (err, req, res, next) => {
       "22P02": {
         status: 400,
         msg: "Invalid input -- must be an integer"
+      },
+      "42703": {
+        status: 404,
+        msg: "Invalid input on query"
       }
     };
     res
@@ -21,11 +25,7 @@ const pSQLErrorHandling = (err, req, res, next) => {
 };
 
 const serverErrorHandler = (err, req, res, next) => {
-  if (err.status === 500) {
-    res.status(500).send({ msg: "Internal server error" });
-  } else {
-    next(err);
-  }
+  res.status(500).send({ msg: "Internal server error" });
 };
 
 const send405Error = (req, res, next) => {

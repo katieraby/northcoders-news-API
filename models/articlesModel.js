@@ -20,30 +20,14 @@ exports.fetchArticleById = article_id => {
     });
 };
 
-exports.updateArticleById = (req, article_id) => {
-  if (
-    req.body.hasOwnProperty("inc_votes") &&
-    typeof req.body.inc_votes === "number"
-  ) {
-    const { inc_votes: votes } = req.body;
-    if (Math.sign(votes) === 0 || Math.sign(votes) === 1) {
-      return knex("articles")
-        .increment("votes", votes)
-        .where({ article_id })
-        .returning("*");
-    } else {
-      let positiveVotes = Math.abs(votes);
-      return knex("articles")
-        .decrement("votes", positiveVotes)
-        .where({ article_id })
-        .returning("*");
-    }
-  } else {
-    return Promise.reject({
-      status: 400,
-      msg: "Bad request - incorrect input for update"
+exports.updateArticleById = (inc_votes = 0, article_id) => {
+  return knex("articles")
+    .increment("votes", inc_votes)
+    .where({ article_id })
+    .returning("*")
+    .then(result => {
+      return result;
     });
-  }
 };
 
 exports.createCommentByArticleId = (req, article_id) => {
@@ -57,10 +41,6 @@ exports.createCommentByArticleId = (req, article_id) => {
         status: 404,
         msg: `Article ID ${article_id} does not exist`
       });
-    }
-
-    if (!usernameExists) {
-      return Promise.reject({ status: 404, msg: "Username not found" });
     }
 
     if (articleExists && usernameExists) {
@@ -145,12 +125,21 @@ exports.checkUsernameExists = username => {
     });
 };
 
-exports.fetchAllArticles = () => {
+exports.fetchAllArticles = query => {
+  if (!query.sort_by) query.sort_by = "created_at";
+  if (!query.order) query.order = "desc";
   return knex
     .select("articles.*")
     .from("articles")
     .leftJoin("comments", "comments.article_id", "articles.article_id")
     .groupBy("articles.article_id")
     .count({ comment_count: "comments" })
-    .then(result => {});
+    .orderBy(query.sort_by, query.order)
+    .then(allArticles => {
+      const formattedArticles = allArticles.map(article => {
+        delete article.body;
+        return article;
+      });
+      return formattedArticles;
+    });
 };

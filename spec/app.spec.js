@@ -95,7 +95,7 @@ describe("/api", () => {
   });
 
   describe.only("/articles", () => {
-    it("GET - returns a status 200 and an array of article objects", () => {
+    it("GET - returns a status 200 and an array of article objects, defaulting to be sorted by date when no sort by query is provided in descending order", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -110,12 +110,27 @@ describe("/api", () => {
             "votes",
             "comment_count"
           );
+          expect(body.articles).to.be.descendingBy("created_at");
         });
     });
 
-    // it('GET - returns a status 200', () => {
+    it("GET - returns a status 200 and all articles sorted by author in ascending order when passed an author sort by and ascending order by query", () => {
+      return request(app)
+        .get("/api/articles?sort_by=author&order=asc")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.ascendingBy("author");
+        });
+    });
 
-    // });
+    it("GET - returns a status and an error message when passed an invalid sort by query", () => {
+      return request(app)
+        .get("/api/articles?sort_by=dragons")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal("Invalid input on query");
+        });
+    });
 
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
@@ -177,27 +192,13 @@ describe("/api", () => {
           });
       });
 
-      it("PATCH - returns a status 400 and a bad request - incorrect input message when the body is empty -- no inc_votes can be found", () => {
-        return request(app)
-          .patch("/api/articles/3")
-          .send({})
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.msg).to.equal(
-              "Bad request - incorrect input for update"
-            );
-          });
-      });
-
       it("PATCH - returns a status 400 and an incorrect input message when the value of inc_votes is a format another than a number", () => {
         return request(app)
           .patch("/api/articles/4")
           .send({ inc_votes: "cat" })
           .expect(400)
           .then(({ body }) => {
-            expect(body.msg).to.equal(
-              "Bad request - incorrect input for update"
-            );
+            expect(body.msg).to.equal("Invalid input -- must be an integer");
           });
       });
 
@@ -277,19 +278,6 @@ describe("/api", () => {
                 "body"
               );
               expect(body.comment.author).to.equal("rogersop");
-            });
-        });
-
-        it("POST - returns a status 404, and a username not found message, when the username passed into the body doesnt exist", () => {
-          return request(app)
-            .post("/api/articles/2/comments")
-            .send({
-              username: "turkeydinosaurs",
-              body: "Hello world, my first comment"
-            })
-            .expect(404)
-            .then(({ body }) => {
-              expect(body.msg).to.equal("Username not found");
             });
         });
 
