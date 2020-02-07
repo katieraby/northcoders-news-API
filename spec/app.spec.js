@@ -512,6 +512,16 @@ describe("/api", () => {
           });
       });
 
+      it("PATCH - returns a status 404 and an error message when passed a valid comment id that does not exist", () => {
+        return request(app)
+          .patch("/api/comments/9999")
+          .send({})
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("Comment ID not found");
+          });
+      });
+
       it("DELETE - responds with a 204 status code, and deletes the specified comment by ID", () => {
         return request(app)
           .delete("/api/comments/2")
