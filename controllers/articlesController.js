@@ -35,7 +35,7 @@ exports.postCommentByArticleId = (req, res, next) => {
   const { article_id } = req.params;
   createCommentByArticleId(req, article_id)
     .then(returnedComment => {
-      res.status(201).send({ comment: returnedComment });
+      res.status(201).send({ comment: returnedComment[0] });
     })
     .catch(err => {
       next(err);
@@ -53,7 +53,10 @@ exports.getCommentsByArticleId = (req, res, next) => {
     });
 };
 
-exports.getAllArticles = () => {
-  console.log("in the controller");
-  fetchAllArticles();
+exports.getAllArticles = (req, res, next) => {
+  fetchAllArticles()
+    .then(articles => {})
+    .catch(err => {
+      next(err);
+    });
 };

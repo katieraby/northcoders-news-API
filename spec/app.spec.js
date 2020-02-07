@@ -94,17 +94,39 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
+    it("GET - returns a status 200 and an array of article objects", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.an("array");
+          expect(body.articles[0]).to.have.all.keys(
+            "author",
+            "title",
+            "article_id",
+            "topic",
+            "created_at",
+            "votes",
+            "comment_count"
+          );
+        });
+    });
+
+    // it('GET - returns a status 200', () => {
+
+    // });
+
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
           .get("/api/articles/1")
           .expect(200)
           .then(({ body }) => {
-            expect(body.article[0].title).to.equal(
+            expect(body.article.title).to.equal(
               "Living in the shadow of a great man"
             );
-            expect(body.article[0]).to.have.all.keys(
+            expect(body.article).to.have.all.keys(
               "author",
               "title",
               "article_id",
@@ -141,7 +163,7 @@ describe("/api", () => {
           .send({ inc_votes: 10 })
           .expect(200)
           .then(({ body }) => {
-            expect(body.article[0].votes).to.equal(110);
+            expect(body.article.votes).to.equal(110);
           });
       });
 
@@ -151,7 +173,7 @@ describe("/api", () => {
           .send({ inc_votes: -50 })
           .expect(200)
           .then(({ body }) => {
-            expect(body.article[0].votes).to.equal(50);
+            expect(body.article.votes).to.equal(50);
           });
       });
 
@@ -185,7 +207,7 @@ describe("/api", () => {
           .send({ inc_votes: 1, name: "Mitch" })
           .expect(200)
           .then(({ body }) => {
-            expect(body.article[0].votes).to.equal(101);
+            expect(body.article.votes).to.equal(101);
           });
       });
 
@@ -199,7 +221,7 @@ describe("/api", () => {
             })
             .expect(201)
             .then(({ body }) => {
-              expect(body.comment[0]).to.have.all.keys(
+              expect(body.comment).to.have.all.keys(
                 "comment_id",
                 "author",
                 "article_id",
@@ -207,7 +229,7 @@ describe("/api", () => {
                 "created_at",
                 "body"
               );
-              expect(body.comment[0].author).to.equal("rogersop");
+              expect(body.comment.author).to.equal("rogersop");
             });
         });
 
@@ -246,7 +268,7 @@ describe("/api", () => {
             })
             .expect(201)
             .then(({ body }) => {
-              expect(body.comment[0]).to.have.all.keys(
+              expect(body.comment).to.have.all.keys(
                 "comment_id",
                 "author",
                 "article_id",
@@ -254,7 +276,7 @@ describe("/api", () => {
                 "created_at",
                 "body"
               );
-              expect(body.comment[0].author).to.equal("rogersop");
+              expect(body.comment.author).to.equal("rogersop");
             });
         });
 
@@ -367,7 +389,7 @@ describe("/api", () => {
 
         describe("INVALID METHODS", () => {
           it("Status:405", () => {
-            const invalidMethods = ["patch", "delete"];
+            const invalidMethods = ["patch", "delete", "put"];
             const methodPromises = invalidMethods.map(method => {
               return request(app)
                 [method]("/api/articles/:article_id/comments")
@@ -399,7 +421,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["get", "patch", "post", "put", "delete"];
+        const invalidMethods = ["patch", "post", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/articles")

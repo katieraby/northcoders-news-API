@@ -20,7 +20,7 @@ exports.fetchArticleById = article_id => {
         });
       } else {
         fetchedArticle[0].comment_count = fetchedComments.length;
-        return { article: fetchedArticle };
+        return { article: fetchedArticle[0] };
       }
     }
   );
@@ -151,6 +151,9 @@ exports.checkUsernameExists = username => {
     });
 };
 
+//works OK need comment count
 exports.fetchAllArticles = () => {
-  console.log("in the model");
+  return knex("articles")
+    .select("*")
+    .then(articles => {});
 };
