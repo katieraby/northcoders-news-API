@@ -1,30 +1,45 @@
 const knex = require("../db/connection");
 
 exports.fetchArticleById = article_id => {
-  const fetchedArticle = knex
-    .select("*")
+  return knex
+    .select("articles.*")
     .from("articles")
-    .where({ article_id });
+    .where({ "articles.article_id": article_id })
+    .leftJoin("comments", "comments.article_id", "articles.article_id")
+    .groupBy("articles.article_id")
+    .count({ comment_count: "comments" })
+    .then(result => {});
 
-  const fetchedComments = knex
-    .select("*")
-    .from("comments")
-    .where({ article_id });
-
-  return Promise.all([fetchedArticle, fetchedComments]).then(
-    ([fetchedArticle, fetchedComments]) => {
-      if (fetchedArticle.length === 0) {
-        return Promise.reject({
-          status: 404,
-          msg: `Article ID ${article_id} does not exist`
-        });
-      } else {
-        fetchedArticle[0].comment_count = fetchedComments.length;
-        return { article: fetchedArticle[0] };
-      }
-    }
-  );
+  //leftjoin comments on comments.article_id = articles.article_id
+  //groupby articles.article_id
+  //count comments
 };
+
+// exports.fetchArticleById = article_id => {
+//   const fetchedArticle = knex
+//     .select("*")
+//     .from("articles")
+//     .where({ article_id });
+
+//   const fetchedComments = knex
+//     .select("*")
+//     .from("comments")
+//     .where({ article_id });
+
+//   return Promise.all([fetchedArticle, fetchedComments]).then(
+//     ([fetchedArticle, fetchedComments]) => {
+//       if (fetchedArticle.length === 0) {
+//         return Promise.reject({
+//           status: 404,
+//           msg: `Article ID ${article_id} does not exist`
+//         });
+//       } else {
+//         fetchedArticle[0].comment_count = fetchedComments.length;
+//         return { article: fetchedArticle[0] };
+//       }
+//     }
+//   );
+// };
 
 exports.updateArticleById = (req, article_id) => {
   if (
@@ -153,7 +168,11 @@ exports.checkUsernameExists = username => {
 
 //works OK need comment count
 exports.fetchAllArticles = () => {
-  return knex("articles")
-    .select("*")
-    .then(articles => {});
+  return knex
+    .select("articles.*")
+    .from("articles")
+    .leftJoin("comments", "comments.article_id", "articles.article_id")
+    .groupBy("articles.article_id")
+    .count({ comment_count: "comments" })
+    .then(result => {});
 };
