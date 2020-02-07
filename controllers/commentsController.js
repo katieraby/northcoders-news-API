@@ -4,11 +4,11 @@ const {
 } = require("../models/commentsModel");
 
 exports.patchCommentById = (req, res, next) => {
-  console.log;
   const { comment_id } = req.params;
-  updateCommentById(req, comment_id)
+  const { inc_votes } = req.body;
+  updateCommentById(inc_votes, comment_id)
     .then(updatedComment => {
-      res.status(200).send({ comment: updatedComment });
+      res.status(200).send({ comment: updatedComment[0] });
     })
     .catch(err => {
       next(err);

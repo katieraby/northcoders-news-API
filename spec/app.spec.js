@@ -94,7 +94,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("GET - returns a status 200 and an array of article objects, defaulting to be sorted by date when no sort by query is provided in descending order", () => {
       return request(app)
         .get("/api/articles")
@@ -152,10 +152,10 @@ describe("/api", () => {
         });
     });
 
-    it.only("GET returns a status 404 and an error message where an invalid format is passed into the sort_by query", () => {
+    it("GET returns a status 400 and an error message where an invalid column is passed into the sort_by query", () => {
       return request(app)
         .get("/api/articles?sort_by=chicken")
-        .expect(404)
+        .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal("Invalid input on query");
         });
@@ -453,15 +453,15 @@ describe("/api", () => {
   });
 
   describe("/comments", () => {
-    describe("/:comment_id", () => {
+    describe.only("/:comment_id", () => {
       it("PATCH - returns a status 200 and the updated comment when passed a number of votes (positive) by which to increment the vote count", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 1 })
           .expect(200)
           .then(({ body }) => {
-            expect(body.comment[0].votes).to.equal(17);
-            expect(body.comment[0]).to.have.all.keys(
+            expect(body.comment.votes).to.equal(17);
+            expect(body.comment).to.have.all.keys(
               "comment_id",
               "author",
               "article_id",
@@ -478,7 +478,7 @@ describe("/api", () => {
           .send({ inc_votes: -1 })
           .expect(200)
           .then(({ body }) => {
-            expect(body.comment[0].votes).to.equal(15);
+            expect(body.comment.votes).to.equal(15);
           });
       });
 
@@ -488,7 +488,7 @@ describe("/api", () => {
           .send({ inc_votes: 11, name: "Katie" })
           .expect(200)
           .then(({ body }) => {
-            expect(body.comment[0].votes).to.equal(27);
+            expect(body.comment.votes).to.equal(27);
           });
       });
 
@@ -498,21 +498,17 @@ describe("/api", () => {
           .send({ inc_votes: "cat" })
           .expect(400)
           .then(({ body }) => {
-            expect(body.msg).to.equal(
-              "Bad request - incorrect input for update"
-            );
+            expect(body.msg).to.equal("Invalid input -- must be an integer");
           });
       });
 
-      it("PATCH - returns a status 400 and a bad request - incorrect input message when the body is empty -- no inc_votes can be found", () => {
+      it("PATCH - returns a status 200 and an unchanged comment when the body is empty -- no inc_votes can be found", () => {
         return request(app)
           .patch("/api/comments/3")
           .send({})
-          .expect(400)
+          .expect(200)
           .then(({ body }) => {
-            expect(body.msg).to.equal(
-              "Bad request - incorrect input for update"
-            );
+            expect(body.comment.votes).to.equal(100);
           });
       });
 
