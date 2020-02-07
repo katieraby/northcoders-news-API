@@ -166,7 +166,7 @@ describe("/api", () => {
         .get("/api/articles?author=princessturkey")
         .expect(404)
         .then(({ body }) => {
-          expect(body.msg).to.equal("Query not found");
+          expect(body.msg).to.equal("Author does not exist");
         });
     });
 

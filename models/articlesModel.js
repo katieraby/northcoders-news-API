@@ -106,10 +106,37 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
 };
 
 exports.fetchAllArticles = query => {
+  //   if (!query.sort_by) query.sort_by = "created_at";
+  //   if (!query.order) query.order = "desc";
+
+  //   return Promise.all([
+  //     this.checkAuthorExists(query.author),
+  //     this.checkTopicExists(query.topic)
+  //   ]).then(([authorExists, topicExists]) => {
+  //     return knex
+  //       .select("articles.*")
+  //       .from("articles")
+  //       .modify(queryRequest => {
+  //         if (query.author) {
+  //           queryRequest.where("articles.author", query.author);
+  //         }
+
+  //         if (query.topic) {
+  //           queryRequest.where("articles.topic", query.topic);
+  //         }
+  //       })
+  //       .leftJoin("comments", "comments.article_id", "articles.article_id")
+  //       .groupBy("articles.article_id")
+  //       .count({ comment_count: "comments" })
+  //       .orderBy(query.sort_by, query.order)
+  //       .then(allArticles => {
+  //         return allArticles;
+  //       });
+  //   });
+  // };
+
   if (!query.sort_by) query.sort_by = "created_at";
   if (!query.order) query.order = "desc";
-  console.log(query.author);
-  console.log(query.topic);
 
   return knex
     .select("articles.*")
@@ -123,34 +150,40 @@ exports.fetchAllArticles = query => {
         queryRequest.where("articles.topic", query.topic);
       }
     })
+
     .leftJoin("comments", "comments.article_id", "articles.article_id")
     .groupBy("articles.article_id")
     .count({ comment_count: "comments" })
     .orderBy(query.sort_by, query.order)
     .then(allArticles => {
-      console.log(query.author);
-      console.log(query.topic);
-      return Promise.all([
-        allArticles,
-        this.checkAuthorExists((query.author = null)),
-        this.checkTopicExists((query.topic = null))
-      ]);
+      const doesAuthorExist = query.author
+        ? this.checkAuthorExists(query.author)
+        : null;
+
+      const doesTopicExist = query.topic
+        ? this.checkTopicExists(query.topic)
+        : null;
+
+      return Promise.all([allArticles, doesAuthorExist, doesTopicExist]);
     })
-    .then(([allArticles, authorExists, topicExists]) => {
-      if (authorExists || topicExists) {
-        return allArticles;
-      } else {
-        return Promise.reject({ status: 404, msg: "Query not found" });
+    .then(([allArticles, doesAuthorExist, doesTopicExist]) => {
+      if (doesAuthorExist === false) {
+        return Promise.reject({ status: 404, msg: "Author does not exist" });
       }
+
+      if (doesTopicExist === false) {
+        return Promise.reject({ status: 404, msg: "Topic does not exist" });
+      }
+
+      return allArticles;
     });
 };
 
 //helper functions to check if exists within the database
 exports.checkTopicExists = topic => {
-  console.log(topic);
-  return knex("articles")
+  return knex("topics")
     .select("*")
-    .where({ topic })
+    .where({ "topics.slug": topic })
     .then(topicRows => {
       if (topicRows.length === 0) return false;
       else return true;
@@ -178,10 +211,9 @@ exports.checkUsernameExists = username => {
 };
 
 exports.checkAuthorExists = author => {
-  console.log(author);
-  return knex("articles")
+  return knex("users")
     .select("*")
-    .where({ author })
+    .where({ "users.username": author })
     .then(authorRows => {
       if (authorRows.length === 0) return false;
       else return true;
