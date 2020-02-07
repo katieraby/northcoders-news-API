@@ -152,7 +152,14 @@ describe("/api", () => {
         });
     });
 
-    //where there is an invalid author passed
+    it.only("GET returns a status 404 and an error message where an invalid format is passed into the sort_by query", () => {
+      return request(app)
+        .get("/api/articles?sort_by=chicken")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal("Invalid input on query");
+        });
+    });
 
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
