@@ -108,6 +108,7 @@ describe("/api", () => {
             "topic",
             "created_at",
             "votes",
+            "body",
             "comment_count"
           );
           expect(body.articles).to.be.descendingBy("created_at");
@@ -167,6 +168,16 @@ describe("/api", () => {
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.equal("Author does not exist");
+        });
+    });
+
+    it("GET returns a status 200 and an empty array with passed an author that exists but has no articles associated", () => {
+      return request(app)
+        .get("/api/articles?author=lurker")
+        .expect(200)
+        .then(({ body }) => {
+          console.log(body);
+          expect(body.articles).to.eql([]);
         });
     });
 
