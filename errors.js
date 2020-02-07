@@ -14,7 +14,7 @@ const pSQLErrorHandling = (err, req, res, next) => {
         msg: "Invalid input -- must be an integer"
       },
       "42703": {
-        status: 400,
+        status: 404,
         msg: "Invalid input on query"
       }
     };

@@ -57,7 +57,15 @@ exports.getCommentsByArticleId = (req, res, next) => {
 exports.getAllArticles = (req, res, next) => {
   fetchAllArticles(req.query)
     .then(articles => {
-      res.status(200).send({ articles: articles });
+      if (articles.length === 0) {
+        res.status(200).send(articles);
+      }
+
+      const formattedArticles = articles.map(article => {
+        delete article.body;
+        return article;
+      });
+      res.status(200).send({ articles: formattedArticles });
     })
     .catch(err => {
       next(err);

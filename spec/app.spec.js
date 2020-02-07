@@ -94,7 +94,7 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("GET - returns a status 200 and an array of article objects, defaulting to be sorted by date when no sort by query is provided in descending order", () => {
       return request(app)
         .get("/api/articles")
@@ -152,12 +152,21 @@ describe("/api", () => {
         });
     });
 
-    it("GET returns a status 400 and an error message where an invalid column is passed into the sort_by query", () => {
+    it("GET returns a status 404 and an error message where an invalid column is passed into the sort_by query", () => {
       return request(app)
         .get("/api/articles?sort_by=chicken")
-        .expect(400)
+        .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.equal("Invalid input on query");
+        });
+    });
+
+    it("GET returns a status 404 when passed a non-existent author", () => {
+      return request(app)
+        .get("/api/articles?author=princessturkey")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal("Query not found");
         });
     });
 
@@ -453,7 +462,7 @@ describe("/api", () => {
   });
 
   describe("/comments", () => {
-    describe.only("/:comment_id", () => {
+    describe("/:comment_id", () => {
       it("PATCH - returns a status 200 and the updated comment when passed a number of votes (positive) by which to increment the vote count", () => {
         return request(app)
           .patch("/api/comments/1")
