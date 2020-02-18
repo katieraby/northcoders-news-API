@@ -16,6 +16,10 @@ const pSQLErrorHandling = (err, req, res, next) => {
       "42703": {
         status: 400,
         msg: "Invalid input on query"
+      },
+      "23502": {
+        status: 400,
+        msg: "Bad request - incorrect input"
       }
     };
     res

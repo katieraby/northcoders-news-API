@@ -31,28 +31,17 @@ exports.updateArticleById = (inc_votes = 0, article_id) => {
 };
 
 exports.createCommentByArticleId = (req, article_id) => {
-  return Promise.all([
-    req,
-    this.checkArticleExists(article_id),
-    this.checkUsernameExists(req.body.username)
-  ]).then(([req, articleExists, usernameExists]) => {
-    if (!articleExists) {
-      return Promise.reject({
-        status: 404,
-        msg: `Article ID ${article_id} does not exist`
-      });
-    }
-
-    if (articleExists && usernameExists) {
-      const { body } = req.body;
-      const { username } = req.body;
-
-      if (body === undefined || username === undefined) {
+  return Promise.all([req, this.checkArticleExists(article_id)]).then(
+    ([req, articleExists]) => {
+      if (!articleExists) {
         return Promise.reject({
-          status: 400,
-          msg: "Bad request - incorrect input"
+          status: 404,
+          msg: `Article ID ${article_id} does not exist`
         });
       }
+
+      const { body } = req.body;
+      const { username } = req.body;
 
       return knex
         .insert({ author: username, body, article_id })
@@ -62,7 +51,7 @@ exports.createCommentByArticleId = (req, article_id) => {
           return result;
         });
     }
-  });
+  );
 };
 
 exports.fetchCommentsByArticleId = (article_id, query) => {
