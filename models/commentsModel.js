@@ -6,6 +6,7 @@ exports.updateCommentById = (inc_votes = 0, comment_id) => {
     .where({ comment_id })
     .returning("*")
     .then(updatedComment => {
+      console.log(updatedComment);
       if (updatedComment.length === 0) {
         return Promise.reject({ status: 404, msg: "Comment ID not found" });
       } else {
