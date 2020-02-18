@@ -472,14 +472,13 @@ describe("/api", () => {
   });
 
   describe("/comments", () => {
-    describe.only("/:comment_id", () => {
+    describe("/:comment_id", () => {
       it("PATCH - returns a status 200 and the updated comment when passed a number of votes (positive) by which to increment the vote count", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 1 })
           .expect(200)
           .then(({ body }) => {
-            console.log(body, "bodylog");
             expect(body.comment.votes).to.equal(17);
             expect(body.comment).to.have.all.keys(
               "comment_id",
