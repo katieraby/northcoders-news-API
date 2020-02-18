@@ -106,35 +106,6 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
 };
 
 exports.fetchAllArticles = query => {
-  //   if (!query.sort_by) query.sort_by = "created_at";
-  //   if (!query.order) query.order = "desc";
-
-  //   return Promise.all([
-  //     this.checkAuthorExists(query.author),
-  //     this.checkTopicExists(query.topic)
-  //   ]).then(([authorExists, topicExists]) => {
-  //     return knex
-  //       .select("articles.*")
-  //       .from("articles")
-  //       .modify(queryRequest => {
-  //         if (query.author) {
-  //           queryRequest.where("articles.author", query.author);
-  //         }
-
-  //         if (query.topic) {
-  //           queryRequest.where("articles.topic", query.topic);
-  //         }
-  //       })
-  //       .leftJoin("comments", "comments.article_id", "articles.article_id")
-  //       .groupBy("articles.article_id")
-  //       .count({ comment_count: "comments" })
-  //       .orderBy(query.sort_by, query.order)
-  //       .then(allArticles => {
-  //         return allArticles;
-  //       });
-  //   });
-  // };
-
   if (!query.sort_by) query.sort_by = "created_at";
   if (!query.order) query.order = "desc";
 

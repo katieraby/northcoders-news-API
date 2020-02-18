@@ -44,8 +44,8 @@ describe("/api", () => {
           .get("/api/users/rogersop")
           .expect(200)
           .then(({ body }) => {
-            expect(body.user[0].username).to.equal("rogersop");
-            expect(body.user[0]).to.have.all.keys(
+            expect(body.user.username).to.equal("rogersop");
+            expect(body.user).to.have.all.keys(
               "username",
               "avatar_url",
               "name"
@@ -94,7 +94,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("GET - returns a status 200 and an array of article objects, defaulting to be sorted by date when no sort by query is provided in descending order", () => {
       return request(app)
         .get("/api/articles")
@@ -124,10 +124,10 @@ describe("/api", () => {
         });
     });
 
-    it("GET - returns a status 404 and an error message when passed an invalid sort by query", () => {
+    it("GET - returns a status 400 and an error message when passed an invalid sort by query", () => {
       return request(app)
         .get("/api/articles?sort_by=dragons")
-        .expect(404)
+        .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal("Invalid input on query");
         });
@@ -153,10 +153,10 @@ describe("/api", () => {
         });
     });
 
-    it("GET returns a status 404 and an error message where an invalid column is passed into the sort_by query", () => {
+    it("GET returns a status 400 and an error message where an invalid column is passed into the sort_by query", () => {
       return request(app)
         .get("/api/articles?sort_by=chicken")
-        .expect(404)
+        .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal("Invalid input on query");
         });
@@ -176,7 +176,6 @@ describe("/api", () => {
         .get("/api/articles?author=lurker")
         .expect(200)
         .then(({ body }) => {
-          console.log(body);
           expect(body.articles).to.eql([]);
         });
     });
