@@ -77,8 +77,7 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
     .then(([returnedComments, articleExists]) => {
       if (articleExists) {
         if (returnedComments.length === 0) {
-          console.log(returnedComments);
-          return [];
+          return { comments: [] };
         }
 
         const formattedComments = returnedComments.map(comment => {
