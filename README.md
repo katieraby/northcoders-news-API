@@ -1,13 +1,13 @@
 # Northcoders News API
 
-Welcome to my Northcoders News API, serving up a range of random Northcoders data on a number of available endpoints. 
+Welcome to my Northcoders News API, serving up a range of random Northcoders data on a number of available endpoints.
 
-You can find the hosted version: 
+You can find the hosted version:
 link TBC
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 Clone a copy of the repository on your machine using:
 
@@ -17,12 +17,13 @@ git clone https://github.com/katieraby/northcoders-news-API.git
 
 ### Prerequisites
 
-To run this API on your machine, you will need the below versions of software installed on your machine.
+To run this API on your machine, you will need Node.js and Postgres installed on your machine.
 
-node.js, express.js, knex.js, and POSTgreSQL. 
+To install Postgres, go to: https://www.postgresql.org/download/
+The version required is a minimum of v. 12.1
 
- "pg": "^7.18.1"
-
+To install Node, go to: https://nodejs.org/en/download/
+The version required is a minimum of v. 13.8.0
 
 ### Installing
 
@@ -68,17 +69,16 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+- [Maven](https://maven.apache.org/) - Dependency Management
+- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
