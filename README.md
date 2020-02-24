@@ -1,8 +1,8 @@
 # Northcoders News API &nbsp; :newspaper: :newspaper_roll:
 
-Welcome to my Northcoders News API, serving up a range of random Northcoders data on a number of available endpoints.
+Welcome to my Northcoders News API (Application Programming Interface), serving up a range of random Northcoders data on a number of available endpoints.
 
-You can find the hosted version:
+You can find the hosted version: &nbsp;
 link TBC
 
 ## Overview of available endpoints
@@ -82,9 +82,10 @@ Endpoint information here...
 
 ## Built With
 
-- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Maven](https://maven.apache.org/) - Dependency Management
-- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- [Node](https://nodejs.org/en/) - JavaScript server-side runtime environment
+- [Knex](https://knexjs.org) - An SQL query builder - used to interact with the PSQL database
+- [PostgreSQL](https://www.postgresql.org/) - Open source object-relational database system
+- [Express](https://expressjs.com/) - Node.js web application server framework
 
 ## Acknowledgments
 
