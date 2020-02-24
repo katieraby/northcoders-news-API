@@ -2,11 +2,11 @@
 
 Welcome to my Northcoders News API (Application Programming Interface), serving up a range of random Northcoders data on a number of available endpoints.
 
-You can find the hosted version: \
+*You can find the hosted version:* \
 link TBC
 
 
-## Overview of available endpoints
+## Overview of current endpoints
 
 ```
 GET /api/topics
@@ -95,7 +95,7 @@ module.exports = { ...customConfig[ENV], ...baseConfig };
   
   _**NOTE**_ If you are using Linux, you will also need to include your PSQL username and password as above. If you are a Mac OS user, you don't need to add your username or password to the knexfile. Hence, don't forget to __add knexfile to your gitignore file__
   
-  ### Set Up The Database
+  ### Setting Up The Database
   
 1. Setup the database by running the below script:
 ```javascript
@@ -119,12 +119,6 @@ To run the tests written for the utils functions, run the following command:
 ```javascript
 npm run test-utils
 ```
-
-
-## Endpoints - Detailed View
-
-Endpoint information here...
-
 
 ## Built With
 
