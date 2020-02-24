@@ -19,7 +19,7 @@ exports.deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params;
   removeCommentById(comment_id)
     .then(() => {
-      res.sendStatus(204);
+      res.sendStatus(204).send({ msg: "Comment successfully deleted" });
     })
     .catch(err => {
       next(err);
