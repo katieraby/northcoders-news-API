@@ -10,7 +10,7 @@ const { expect } = chai;
 describe("/api", () => {
   beforeEach(() => knex.seed.run());
   after(() => knex.destroy());
-  it.only("GET - returns a JSON containing all of the available endpoints on the API", () => {
+  it("GET - returns a JSON containing all of the available endpoints on the API", () => {
     return request(app)
       .get("/api")
       .expect(200)
