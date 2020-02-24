@@ -93,7 +93,7 @@ const customConfig = {
 module.exports = { ...customConfig[ENV], ...baseConfig };
 ```
   
-  _**NOTE**_ If you are using Linux, you will also need to include your PSQL username and password as above. If you are a Mac OS user, you don't need to add your username or password to the knexfile. Hence, don't forget to __add knexfile to your gitignore file__
+  _**NOTE**_: If you are using Linux, you will also need to include your PSQL username and password as above. If you are a Mac OS user, you don't need to add your username or password to the knexfile.\ Hence, don't forget to __add knexfile to your gitignore file__
   
   ### Setting Up The Database
   
