@@ -6,7 +6,7 @@ Welcome to my Northcoders News API (Application Programming Interface), serving 
 https://news-from-the-northcoders-api.herokuapp.com/
 
 
-## Overview of current endpoints
+## Overview Of Endpoints
 *Go to /api for detailed information about endpoints*
 
 ```
@@ -109,7 +109,7 @@ npm run setup-dbs
   ```
 
 
-## Running the tests
+## Running the Tests
 
 To run the tests written for the API during the TDD process (including tests for error handling), run the following command:
 ```javascript
