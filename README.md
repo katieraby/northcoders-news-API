@@ -5,67 +5,61 @@ Welcome to my Northcoders News API, serving up a range of random Northcoders dat
 You can find the hosted version:
 link TBC
 
-## Getting Started
+## Overview of available endpoints
+
+
+## Getting Started & Installation
+  ### Prerequisites
+
+  To run this API on your machine, you will need Node.js and Postgres installed on your machine.
+
+  To install Postgres, go to: https://www.postgresql.org/download/
+  The version required is a minimum of v. 12.1
+
+  To install Node, go to: https://nodejs.org/en/download/
+  The version required is a minimum of v. 13.8.0
+
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Clone a copy of the repository on your machine using:
+1. Clone a copy of the repository on your machine using the below command:
 
 ```javascript
 git clone https://github.com/katieraby/northcoders-news-API.git
 ```
 
-### Prerequisites
+1. Install the required dependencies:
 
-To run this API on your machine, you will need Node.js and Postgres installed on your machine.
-
-To install Postgres, go to: https://www.postgresql.org/download/
-The version required is a minimum of v. 12.1
-
-To install Node, go to: https://nodejs.org/en/download/
-The version required is a minimum of v. 13.8.0
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
+```javascript
+npm install
 ```
 
-And repeat
-
+1. Setup the database by running the below script:
+```javascript
+npm run setup-dbs
 ```
-until finished
-```
 
-End with an example of getting some data out of the system or using it for a little demo
+  1. To seed the database with an initial set of data:
+  ```javascript
+  npm run seed
+  ```
+
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+To run the tests written for the API during the TDD process (including tests for error handling), run the following command:
+```javascript
+npm run test
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+To run the tests written for the utils functions, run the following command:
+```javascript
+npm run test-utils
 ```
 
-## Deployment
+## Endpoints - Detailed View
 
-Add additional notes about how to deploy this on a live system
+Endpoint information here...
 
 ## Built With
 
@@ -73,12 +67,6 @@ Add additional notes about how to deploy this on a live system
 - [Maven](https://maven.apache.org/) - Dependency Management
 - [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
-
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Thanks to the team at Northcoders for providing me with the skills to create this awesome API during our back-end block. 
