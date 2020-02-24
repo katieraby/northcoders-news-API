@@ -1,4 +1,4 @@
-# Northcoders News API
+# Northcoders News API &nbsp; :newspaper: :newspaper_roll:
 
 Welcome to my Northcoders News API, serving up a range of random Northcoders data on a number of available endpoints.
 
@@ -7,16 +7,34 @@ link TBC
 
 ## Overview of available endpoints
 
+```
+GET /api/topics
+
+GET /api/users/:username
+
+GET /api/articles/:article_id
+PATCH /api/articles/:article_id
+
+POST /api/articles/:article_id/comments
+GET /api/articles/:article_id/comments
+
+GET /api/articles
+
+PATCH /api/comments/:comment_id
+DELETE /api/comments/:comment_id
+
+GET /api
+```
 
 ## Getting Started & Installation
   ### Prerequisites
 
   To run this API on your machine, you will need Node.js and Postgres installed on your machine.
 
-  To install Postgres, go to: https://www.postgresql.org/download/
+  To install Postgres, go to: https://www.postgresql.org/download/ \
   The version required is a minimum of v. 12.1
 
-  To install Node, go to: https://nodejs.org/en/download/
+  To install Node, go to: https://nodejs.org/en/download/ \
   The version required is a minimum of v. 13.8.0
 
   ### Installation
