@@ -32,7 +32,7 @@
           "topic": "cooking",
           "author": "weegembump",
           "body": "Text from the article..",
-          "created_at": 84324302820
+          "created_at": "2018-05-30T15:59:13.341Z"
         }
       ]
     }
@@ -47,7 +47,7 @@
         "article_id": 1323,
         "body": "Text from the article..",
         "topic": "coding",
-        "created_at": 4382904830942,
+        "created_at": "2018-05-30T15:59:13.341Z",
         "votes": 25,
         "comment_count": 2
       }
@@ -64,7 +64,7 @@
         "article_id": 1323,
         "body": "Text from the article..",
         "topic": "coding",
-        "created_at": 4382904830942,
+        "created_at": "2018-05-30T15:59:13.341Z",
         "votes": 27,
         "comment_count": 2
       }
@@ -77,7 +77,7 @@
       "comments": {
         "comment_id": 43,
         "votes": 75,
-        "created_at": 24834732,
+        "created_at": "2018-05-30T15:59:13.341Z",
         "author": "exampleusernamehere",
         "body": "commentbody text here"
       }
@@ -94,7 +94,7 @@
       "comment": {
         "comment_id": 789,
         "votes": 0,
-        "created_at": 72843072,
+        "created_at": "2018-05-30T15:59:13.341Z",
         "author": "exampleusernamehere",
         "body": "commentbody text here"
       }
@@ -108,7 +108,7 @@
       "comment": {
         "comment_id": 797,
         "votes": 0,
-        "created_at": 72843072,
+        "created_at": "2018-05-30T15:59:13.341Z",
         "author": "exampleusernamehere",
         "body": "commentbody text here"
       }
