@@ -160,16 +160,6 @@ exports.checkArticleExists = article_id => {
     });
 };
 
-exports.checkUsernameExists = username => {
-  return knex("users")
-    .select("*")
-    .where({ username })
-    .then(userRows => {
-      if (userRows.length === 0) return false;
-      else return true;
-    });
-};
-
 exports.checkAuthorExists = author => {
   return knex("users")
     .select("*")
