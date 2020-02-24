@@ -350,7 +350,7 @@ describe("/api", () => {
             .get("/api/articles/2/comments")
             .expect(200)
             .then(({ body }) => {
-              expect(body).to.eql([]);
+              expect(body).to.eql({ comments: [] });
             });
         });
 
