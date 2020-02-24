@@ -2,7 +2,7 @@
 
 Welcome to my Northcoders News API (Application Programming Interface), serving up a range of random Northcoders data on a number of available endpoints.
 
-You can find the hosted version: &nbsp;
+You can find the hosted version: \
 link TBC
 
 ## Overview of available endpoints
