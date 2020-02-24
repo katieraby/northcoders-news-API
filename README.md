@@ -1,4 +1,4 @@
-# Northcoders News API &nbsp; :newspaper: :newspaper_roll:
+# News From The Northcoders API &nbsp; :newspaper: :newspaper_roll:
 
 Welcome to my Northcoders News API (Application Programming Interface), serving up a range of random Northcoders data on a number of available endpoints.
 
