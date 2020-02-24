@@ -5,6 +5,7 @@ Welcome to my Northcoders News API (Application Programming Interface), serving 
 You can find the hosted version: \
 link TBC
 
+
 ## Overview of available endpoints
 
 ```
@@ -25,6 +26,7 @@ DELETE /api/comments/:comment_id
 
 GET /api
 ```
+
 
 ## Getting Started & Installation
   ### Prerequisites
@@ -52,13 +54,55 @@ git clone https://github.com/katieraby/northcoders-news-API.git
 npm install
 ```
 
-  ### Getting Started
+  ### How to create your knexfile.js (required)
+  
+  Knex requires configuration information, including the client adapter and the database you are connecting to.\
+  You must also specify where the function to seed the database lives. An example set-up of the file is below:
+  
+  ```javascript
+  // in ./knexfile.js
+
+const ENV = process.env.NODE_ENV || "development";
+
+const baseConfig = {
+  client: "pg",
+  migrations: {
+    directory: "./db/migrations"
+  },
+  seeds: {
+    directory: "./db/seeds"
+  }
+};
+
+const customConfig = {
+  development: {
+    connection: {
+      database: "nc_news"
+    }
+  },
+  test: {
+    connection: {
+      database: "nc_news_test"
+    // for linux:
+    // username: 'exampleusername',
+    // password: 'insertpasswordhere'
+    }
+  }
+};
+
+module.exports = { ...customConfig[ENV], ...baseConfig };
+```
+  
+  _**NOTE**_ If you are using Linux, you will also need to include your PSQL username and password as above. If you are a Mac OS user, you don't need to add your username or password to the knexfile. Hence, don't forget to __add knexfile to your gitignore file__
+  
+  ### Set Up The Database
+  
 1. Setup the database by running the below script:
 ```javascript
 npm run setup-dbs
 ```
 
-  1a. To seed the database with an initial set of data:
+&nbsp; &nbsp; 1a. To seed the database with an initial set of data:
   ```javascript
   npm run seed
   ```
@@ -76,9 +120,11 @@ To run the tests written for the utils functions, run the following command:
 npm run test-utils
 ```
 
+
 ## Endpoints - Detailed View
 
 Endpoint information here...
+
 
 ## Built With
 
@@ -86,6 +132,7 @@ Endpoint information here...
 - [Knex](https://knexjs.org) - An SQL query builder - used to interact with the PSQL database
 - [PostgreSQL](https://www.postgresql.org/) - Open source object-relational database system
 - [Express](https://expressjs.com/) - Node.js web application server framework
+
 
 ## Acknowledgments
 
