@@ -10,6 +10,15 @@ const { expect } = chai;
 describe("/api", () => {
   beforeEach(() => knex.seed.run());
   after(() => knex.destroy());
+  it.only("GET - returns a JSON containing all of the available endpoints on the API", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).to.haveOwnProperty("GET /api");
+        expect(body).to.haveOwnProperty("GET /api/articles");
+      });
+  });
   describe("/topics", () => {
     it("GET - returns a 200 status code an an array of topic objects with slug and description properties", () => {
       return request(app)
