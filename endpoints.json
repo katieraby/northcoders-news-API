@@ -9,19 +9,114 @@
       "topics": [{ "slug": "football", "description": "Footie!" }]
     }
   },
+  "GET /api/users/:username": {
+    "description": "serves an object containing details about the user",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "username": "exampleusername",
+        "avatar_url": "http://avatarurlhere.com/avatar.jpg",
+        "name": "Name Of The User"
+      }
+    }
+  },
   "GET /api/articles": {
-    "description": "serves an array of all topics",
+    "description": "serves an array of all articles",
     "queries": ["author", "topic", "sort_by", "order"],
     "exampleResponse": {
       "articles": [
         {
+          "article_id": 4378942,
+          "votes": 50,
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
           "author": "weegembump",
           "body": "Text from the article..",
-          "created_at": 1527695953341
+          "created_at": 84324302820
         }
       ]
     }
+  },
+  "GET /api/articles/:article_id": {
+    "description": "serves an article object containing the article by id specified",
+    "queries": [],
+    "exampleResponse": {
+      "article": {
+        "author": "exampleusernamehere",
+        "title": "How to train your dragon: a step-by-step article",
+        "article_id": 1323,
+        "body": "Text from the article..",
+        "topic": "coding",
+        "created_at": 4382904830942,
+        "votes": 25,
+        "comment_count": 2
+      }
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "Accepts an object in the form { inc_votes: newVote }, which will indicate how much the votes property should be updated by. Responds with the updated article",
+    "exampleInput": { "inc_votes": 2 },
+    "queries": [],
+    "exampleResponse": {
+      "article": {
+        "author": "exampleusernamehere",
+        "title": "How to train your dragon: a step-by-step article",
+        "article_id": 1323,
+        "body": "Text from the article..",
+        "topic": "coding",
+        "created_at": 4382904830942,
+        "votes": 27,
+        "comment_count": 2
+      }
+    }
+  },
+  "GET /api/articles/:article_id/comments": {
+    "description": "Serves an array of comments for the given article id",
+    "queries": [],
+    "exampleResponse": {
+      "comments": {
+        "comment_id": 43,
+        "votes": 75,
+        "created_at": 24834732,
+        "author": "exampleusernamehere",
+        "body": "commentbody text here"
+      }
+    }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "Accepts an object with username and body properties, and returns with the posted comment",
+    "exampleInput": {
+      "username": "exampleusernamehere",
+      "body": "commentbody text here"
+    },
+    "queries": [],
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 789,
+        "votes": 0,
+        "created_at": 72843072,
+        "author": "exampleusernamehere",
+        "body": "commentbody text here"
+      }
+    }
+  },
+  "PATCH /api/comments/:comment_id": {
+    "description": "Accepts an object in the form { inc_votes: newVote }, which will indicate how much the votes property should be updated by. Responds with the updated comment",
+    "exampleInput": { "inc_votes": 8 },
+    "queries": [],
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 797,
+        "votes": 0,
+        "created_at": 72843072,
+        "author": "exampleusernamehere",
+        "body": "commentbody text here"
+      }
+    }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "Serves a status 204 and no content when sending a delete request for a specified comment by id",
+    "queries": [],
+    "exampleResponse": "Status 204. Comment successfully deleted"
   }
 }
