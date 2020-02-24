@@ -46,7 +46,7 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/katieraby/northcoders-news-API.git
 ```
 
-1. Install the required dependencies:
+2. Install the required dependencies:
 
 ```javascript
 npm install
@@ -58,7 +58,7 @@ npm install
 npm run setup-dbs
 ```
 
-  1. To seed the database with an initial set of data:
+  1a. To seed the database with an initial set of data:
   ```javascript
   npm run seed
   ```
