@@ -19,7 +19,7 @@ link TBC
   To install Node, go to: https://nodejs.org/en/download/
   The version required is a minimum of v. 13.8.0
 
-
+  ### Installation
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 1. Clone a copy of the repository on your machine using the below command:
@@ -34,6 +34,7 @@ git clone https://github.com/katieraby/northcoders-news-API.git
 npm install
 ```
 
+  ### Getting Started
 1. Setup the database by running the below script:
 ```javascript
 npm run setup-dbs
