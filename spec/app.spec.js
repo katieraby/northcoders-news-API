@@ -198,6 +198,16 @@ describe("/api", () => {
         });
     });
 
+    it("GET - returns a status 200 an array of articles limited to 10 on page 2 (articles 10-12)", () => {
+      return request(app)
+        .get("/api/articles?p=2")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.an("array");
+          expect(body.articles.length).to.equal(2);
+        });
+    });
+
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
@@ -363,13 +373,23 @@ describe("/api", () => {
             });
         });
 
-        it.only("GET - returns a status 200 and an array of comments limited by the passed limit query, or defaults to 10", () => {
+        it("GET - returns a status 200 and an array of comments limited by the passed limit query, or defaults to 10", () => {
           return request(app)
             .get("/api/articles/1/comments?limit=8")
             .expect(200)
             .then(({ body }) => {
               expect(body.comments).to.be.an("array");
               expect(body.comments.length).to.equal(8);
+            });
+        });
+
+        it("GET - returns a status 200 an array of comments limited to 10 on page 2 (comments 10-15)", () => {
+          return request(app)
+            .get("/api/articles/1/comments?p=2")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).to.be.an("array");
+              expect(body.comments.length).to.equal(6);
             });
         });
 

@@ -71,6 +71,7 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
     .where({ article_id })
     .orderBy(query.sort_by, query.order)
     .limit(query.limit)
+    .offset((query.p - 1) * query.limit || 0)
     .then(returnedComments => {
       return Promise.all([
         returnedComments,
@@ -120,6 +121,7 @@ exports.fetchAllArticles = query => {
     .count({ comment_count: "comments" })
     .orderBy(query.sort_by, query.order)
     .limit(query.limit)
+    .offset((query.p - 1) * query.limit || 0)
     .then(allArticles => {
       const doesAuthorExist = query.author
         ? this.checkAuthorExists(query.author)
