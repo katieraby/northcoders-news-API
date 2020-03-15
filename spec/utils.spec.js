@@ -2,7 +2,8 @@ const { expect } = require("chai");
 const {
   formatDates,
   makeRefObj,
-  formatComments
+  formatComments,
+  truncateBody
 } = require("../db/utils/utils");
 
 describe("formatDates", () => {
@@ -208,5 +209,25 @@ describe("formatComments", () => {
       "votes",
       "created_at"
     );
+  });
+});
+
+describe.only("truncateBody", () => {
+  it("takes a string and returns a string", () => {
+    expect(truncateBody("hello")).to.be.a("string");
+  });
+
+  it("takes a short string of less than 100 characters and returns the original string", () => {
+    const str =
+      "hello this is a test string which is less than 100 characters long";
+    expect(truncateBody(str)).to.equal(str);
+  });
+
+  it("takes a string longer than 100 characters and returns a truncated version finishing with 3 ...", () => {
+    const str =
+      "hello this is a test string which is longer than 100 characters long, so we expect it to truncate like so";
+    const expected =
+      "hello this is a test string which is longer than 100 characters long, so we expect it to truncate...";
+    expect(truncateBody(str)).to.equal(expected);
   });
 });

@@ -141,7 +141,6 @@ exports.fetchAllArticles = query => {
       if (doesTopicExist === false) {
         return Promise.reject({ status: 404, msg: "Topic does not exist" });
       }
-
       return allArticles;
     });
 };

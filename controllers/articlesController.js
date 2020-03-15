@@ -6,6 +6,8 @@ const {
   fetchAllArticles
 } = require("../models/articlesModel");
 
+const { truncateBody } = require("../db/utils/utils");
+
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
   fetchArticleById(article_id)
@@ -57,7 +59,12 @@ exports.getCommentsByArticleId = (req, res, next) => {
 exports.getAllArticles = (req, res, next) => {
   fetchAllArticles(req.query)
     .then(articles => {
-      res.status(200).send({ articles });
+      const articlesToReturn = articles.map(article => {
+        article.body = truncateBody(article.body);
+        return article;
+      });
+      console.log(articlesToReturn);
+      res.status(200).send({ articles: articlesToReturn });
     })
     .catch(err => {
       next(err);

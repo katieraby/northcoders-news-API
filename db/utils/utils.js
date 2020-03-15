@@ -35,3 +35,14 @@ exports.formatComments = (comments, articleRef) => {
   });
   return this.formatDates(formattedComments);
 };
+
+//truncate articlebody
+exports.truncateBody = bodyStr => {
+  const ending = "...";
+  const length = 100;
+  if (bodyStr.length > length) {
+    return bodyStr.substring(0, length - ending.length) + ending;
+  } else {
+    return bodyStr;
+  }
+};
