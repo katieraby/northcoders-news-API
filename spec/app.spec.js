@@ -189,6 +189,15 @@ describe("/api", () => {
         });
     });
 
+    it("GET returns a status 200 and a limited array of articles when passed a limit query", () => {
+      return request(app)
+        .get("/api/articles?limit=6")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles.length).to.equal(6);
+        });
+    });
+
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
@@ -351,6 +360,16 @@ describe("/api", () => {
                 "author",
                 "body"
               );
+            });
+        });
+
+        it.only("GET - returns a status 200 and an array of comments limited by the passed limit query, or defaults to 10", () => {
+          return request(app)
+            .get("/api/articles/1/comments?limit=8")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).to.be.an("array");
+              expect(body.comments.length).to.equal(8);
             });
         });
 

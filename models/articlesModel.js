@@ -64,10 +64,13 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
   }
 
   if (query.order !== "asc") query.order = "desc";
+  if (!query.limit) query.limit = 10;
+
   return knex("comments")
     .select("*")
     .where({ article_id })
     .orderBy(query.sort_by, query.order)
+    .limit(query.limit)
     .then(returnedComments => {
       return Promise.all([
         returnedComments,
@@ -97,6 +100,7 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
 exports.fetchAllArticles = query => {
   if (!query.sort_by) query.sort_by = "created_at";
   if (!query.order) query.order = "desc";
+  if (!query.limit) query.limit = 10;
 
   return knex
     .select("articles.*")
@@ -115,6 +119,7 @@ exports.fetchAllArticles = query => {
     .groupBy("articles.article_id")
     .count({ comment_count: "comments" })
     .orderBy(query.sort_by, query.order)
+    .limit(query.limit)
     .then(allArticles => {
       const doesAuthorExist = query.author
         ? this.checkAuthorExists(query.author)
