@@ -162,6 +162,15 @@ describe("/api", () => {
         });
     });
 
+    it.only("GET - returns a status 404 and an error message when passed a topic query that doesnt exist", () => {
+      return request(app)
+        .get("/api/articles?topic=wizards")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal("Topic does not exist");
+        });
+    });
+
     it("GET returns a status 400 and an error message where an invalid column is passed into the sort_by query", () => {
       return request(app)
         .get("/api/articles?sort_by=chicken")

@@ -162,7 +162,6 @@ exports.fetchArticleCount = query => {
     })
     .first()
     .then(total => {
-      console.log(total.count, "total count");
       return total.count;
     });
 };
