@@ -145,6 +145,28 @@ exports.fetchAllArticles = query => {
     });
 };
 
+exports.fetchArticleCount = query => {
+  if (!query.sort_by) query.sort_by = "created_at";
+  if (!query.order) query.order = "desc";
+
+  return knex("articles")
+    .count("*")
+    .modify(queryRequest => {
+      if (query.author) {
+        queryRequest.where("articles.author", query.author);
+      }
+
+      if (query.topic) {
+        queryRequest.where("articles.topic", query.topic);
+      }
+    })
+    .first()
+    .then(total => {
+      console.log(total.count, "total count");
+      return total.count;
+    });
+};
+
 //helper functions to check if exists within the database
 exports.checkTopicExists = topic => {
   return knex("topics")

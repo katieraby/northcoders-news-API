@@ -3,7 +3,8 @@ const {
   updateArticleById,
   createCommentByArticleId,
   fetchCommentsByArticleId,
-  fetchAllArticles
+  fetchAllArticles,
+  fetchArticleCount
 } = require("../models/articlesModel");
 
 const { truncateBody } = require("../db/utils/utils");
@@ -57,13 +58,18 @@ exports.getCommentsByArticleId = (req, res, next) => {
 };
 
 exports.getAllArticles = (req, res, next) => {
-  fetchAllArticles(req.query)
-    .then(articles => {
+  return Promise.all([
+    fetchAllArticles(req.query),
+    fetchArticleCount(req.query)
+  ])
+    .then(([articles, articlecount]) => {
       const articlesToReturn = articles.map(article => {
         article.body = truncateBody(article.body);
         return article;
       });
-      res.status(200).send({ articles: articlesToReturn });
+      res
+        .status(200)
+        .send({ articles: articlesToReturn, totalCount: +articlecount });
     })
     .catch(err => {
       next(err);

@@ -208,6 +208,16 @@ describe("/api", () => {
         });
     });
 
+    it("GET: - returns a status 200 an an array of articles that has totalCount property showing total number of articles with filters applied, discounting page limit", () => {
+      return request(app)
+        .get("/api/articles?author=rogersop&limit=10")
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.have.keys(["articles", "totalCount"]);
+          expect(res.body.totalCount).to.equal(3);
+        });
+    });
+
     describe("/:article_id", () => {
       it("GET - returns a status 200 and an article object with the ID passed at the parametric endpoint", () => {
         return request(app)
