@@ -63,7 +63,6 @@ exports.getAllArticles = (req, res, next) => {
         article.body = truncateBody(article.body);
         return article;
       });
-      console.log(articlesToReturn);
       res.status(200).send({ articles: articlesToReturn });
     })
     .catch(err => {
