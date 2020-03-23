@@ -31,27 +31,14 @@ exports.updateArticleById = (inc_votes = 0, article_id) => {
 };
 
 exports.createCommentByArticleId = (req, article_id) => {
-  return Promise.all([req, this.checkArticleExists(article_id)]).then(
-    ([req, articleExists]) => {
-      if (!articleExists) {
-        return Promise.reject({
-          status: 404,
-          msg: `Article ID ${article_id} does not exist`
-        });
-      }
-
-      const { body } = req.body;
-      const { username } = req.body;
-
-      return knex
-        .insert({ author: username, body, article_id })
-        .into("comments")
-        .returning("*")
-        .then(result => {
-          return result;
-        });
-    }
-  );
+  const { body, username } = req.body;
+  return knex
+    .insert({ author: username, body, article_id })
+    .into("comments")
+    .returning("*")
+    .then(result => {
+      return result;
+    });
 };
 
 exports.fetchCommentsByArticleId = (article_id, query) => {
@@ -163,6 +150,16 @@ exports.fetchArticleCount = query => {
     .first()
     .then(total => {
       return total.count;
+    });
+};
+
+exports.createArticle = ({ username, title, topic, body }) => {
+  return knex
+    .insert({ author: username, body, title, topic })
+    .into("articles")
+    .returning("*")
+    .then(postedArticle => {
+      return postedArticle;
     });
 };
 

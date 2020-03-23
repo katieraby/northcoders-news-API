@@ -4,8 +4,11 @@ const {
   createCommentByArticleId,
   fetchCommentsByArticleId,
   fetchAllArticles,
-  fetchArticleCount
+  fetchArticleCount,
+  createArticle
 } = require("../models/articlesModel");
+
+const { createTopic } = require("../models/topicsModel");
 
 const { truncateBody } = require("../db/utils/utils");
 
@@ -70,6 +73,19 @@ exports.getAllArticles = (req, res, next) => {
       res
         .status(200)
         .send({ articles: articlesToReturn, totalCount: +articlecount });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+exports.postArticle = (req, res, next) => {
+  createTopic(req.body.topic)
+    .then(() => {
+      return createArticle(req.body);
+    })
+    .then(postedArticle => {
+      res.status(201).send({ article: postedArticle[0] });
     })
     .catch(err => {
       next(err);

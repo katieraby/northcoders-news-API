@@ -162,7 +162,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("GET - returns a status 404 and an error message when passed a topic query that doesnt exist", () => {
+    it("GET - returns a status 404 and an error message when passed a topic query that doesnt exist", () => {
       return request(app)
         .get("/api/articles?topic=wizards")
         .expect(404)
@@ -217,13 +217,37 @@ describe("/api", () => {
         });
     });
 
-    it("GET: - returns a status 200 an an array of articles that has totalCount property showing total number of articles with filters applied, discounting page limit", () => {
+    it("GET - returns a status 200 an an array of articles that has totalCount property showing total number of articles with filters applied, discounting page limit", () => {
       return request(app)
         .get("/api/articles?author=rogersop&limit=10")
         .expect(200)
         .then(res => {
           expect(res.body).to.have.keys(["articles", "totalCount"]);
           expect(res.body.totalCount).to.equal(3);
+        });
+    });
+
+    it("POST - responds with a status 201 and the posted article", () => {
+      return request(app)
+        .post("/api/articles")
+        .send({
+          username: "rogersop",
+          title: "How to make a POST request 101",
+          topic: "monsters",
+          body:
+            "Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request."
+        })
+        .expect(201)
+        .then(res => {
+          expect(res.body.article).to.have.keys([
+            "author",
+            "title",
+            "article_id",
+            "topic",
+            "created_at",
+            "votes",
+            "body"
+          ]);
         });
     });
 
@@ -326,19 +350,6 @@ describe("/api", () => {
                 "body"
               );
               expect(body.comment.author).to.equal("rogersop");
-            });
-        });
-
-        it("POST - responds with a status 404 when the passed article ID does not exist", () => {
-          return request(app)
-            .post("/api/articles/999/comments")
-            .send({
-              username: "rogersop",
-              body: "Hello world, my first comment"
-            })
-            .expect(404)
-            .then(({ body }) => {
-              expect(body.msg).to.equal("Article ID 999 does not exist");
             });
         });
 
@@ -524,7 +535,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["patch", "post", "put", "delete"];
+        const invalidMethods = ["patch", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/articles")

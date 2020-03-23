@@ -32,7 +32,8 @@
           "topic": "cooking",
           "author": "weegembump",
           "body": "Text from the article..",
-          "created_at": "2018-05-30T15:59:13.341Z"
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "comment_count": 22
         }
       ]
     }

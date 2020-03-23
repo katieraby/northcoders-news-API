@@ -8,3 +8,7 @@ exports.fetchAllTopics = () => {
       return { topics: allTopics };
     });
 };
+
+exports.createTopic = topic => {
+  return knex.insert({ slug: topic, description: "default" }).into("topics");
+};
