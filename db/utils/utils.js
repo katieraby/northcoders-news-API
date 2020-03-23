@@ -1,6 +1,3 @@
-/* takes an array of objects,
-returns new array.
-Each item in array has its timestamp converted to a javascript date object */
 exports.formatDates = list => {
   let newArray = list.map(obj => {
     let newDate = new Date(obj.created_at);
@@ -18,8 +15,6 @@ exports.makeRefObj = list => {
   });
   return refObj;
 };
-
-// take an array of comment objects(`comments`) and a reference object, and return a new array of formatted comments.
 
 exports.formatComments = (comments, articleRef) => {
   const formattedComments = comments.map(object => {
@@ -39,7 +34,7 @@ exports.formatComments = (comments, articleRef) => {
 //truncate articlebody
 exports.truncateBody = bodyStr => {
   const ending = "...";
-  const length = 100;
+  const length = 200;
   if (bodyStr.length > length) {
     return bodyStr.substring(0, length - ending.length) + ending;
   } else {

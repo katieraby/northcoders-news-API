@@ -217,17 +217,17 @@ describe.only("truncateBody", () => {
     expect(truncateBody("hello")).to.be.a("string");
   });
 
-  it("takes a short string of less than 100 characters and returns the original string", () => {
+  it("takes a short string of less than 200 characters and returns the original string", () => {
     const str =
-      "hello this is a test string which is less than 100 characters long";
+      "hello this is a test string which is less than 200 characters long. hello this is a test string which is less than 200 characters long. hello this is a test string.";
     expect(truncateBody(str)).to.equal(str);
   });
 
-  it("takes a string longer than 100 characters and returns a truncated version finishing with 3 ...", () => {
+  it("takes a string longer than 200 characters and returns a truncated version finishing with 3 ...", () => {
     const str =
-      "hello this is a test string which is longer than 100 characters long, so we expect it to truncate like so";
+      "hello this is a test string which is longer than 200 characters long. hello this is a test string which is longer than 200 characters long. hello this is a test string which is longer than 200 characters. hello this is a test string.";
     const expected =
-      "hello this is a test string which is longer than 100 characters long, so we expect it to truncate...";
+      "hello this is a test string which is longer than 200 characters long. hello this is a test string which is longer than 200 characters long. hello this is a test string which is longer than 200 char...";
     expect(truncateBody(str)).to.equal(expected);
   });
 });
