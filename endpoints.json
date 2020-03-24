@@ -6,11 +6,24 @@
     "description": "serves an array of all topics",
     "queries": [],
     "exampleResponse": {
-      "topics": [{ "slug": "football", "description": "Footie!" }]
+      "topics": [
+        { "slug": "football", "description": "Footie!" },
+        { "slug": "coding", "description": "All things code" }
+      ]
+    }
+  },
+  "POST /api/topics": {
+    "description": "Accepts an object with topic slug and description keys, and returns the posted topic",
+    "queries": [],
+    "exampleResponse": {
+      "topic": {
+        "slug": "Magic",
+        "description": "Wizards galore!"
+      }
     }
   },
   "GET /api/users/:username": {
-    "description": "serves an object containing details about the user",
+    "description": "Serves an object containing details about the user",
     "queries": [],
     "exampleResponse": {
       "user": {
@@ -21,7 +34,7 @@
     }
   },
   "GET /api/articles": {
-    "description": "serves an array of all articles",
+    "description": "Serves an array of all articles",
     "queries": ["author", "topic", "sort_by", "order", "limit", "p"],
     "exampleResponse": {
       "articles": [
@@ -32,14 +45,36 @@
           "topic": "cooking",
           "author": "weegembump",
           "body": "Text from the article..",
-          "created_at": "2018-05-30T15:59:13.341Z",
-          "comment_count": 22
+          "created_at": "2018-05-30T15:59:13.341Z"
+        }
+      ]
+    }
+  },
+  "POST - /api/articles": {
+    "description": "Takes an object with the keys of username, title, topic and body, and returns the posted article",
+    "queries": [],
+    "exampleInput": {
+      "username": "rogersop",
+      "title": "How to make a POST request 101",
+      "topic": "monsters",
+      "body": "Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request."
+    },
+    "exampleResponse": {
+      "articles": [
+        {
+          "article_id": 543543,
+          "votes": 0,
+          "title": "How to make a POST request 101",
+          "topic": "monsters",
+          "author": "rogersop",
+          "body": "Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request.",
+          "created_at": "2018-05-30T15:59:13.341Z"
         }
       ]
     }
   },
   "GET /api/articles/:article_id": {
-    "description": "serves an article object containing the article by id specified",
+    "description": "Serves an article object containing the article by id specified",
     "queries": [],
     "exampleResponse": {
       "article": {

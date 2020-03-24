@@ -30,9 +30,34 @@ describe("/api", () => {
         });
     });
 
+    it("POST - returns a status 201 and the posted topic", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({
+          description: "We all love cheese so here is a cheese topic",
+          slug: "cheese"
+        })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.topic).to.have.keys(["slug", "description"]);
+        });
+    });
+
+    it("POST - responds with a status 400 when there are keys missing from the body", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({
+          description: "We all love cheese so here is a cheese topic"
+        })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal("Bad request - incorrect input");
+        });
+    });
+
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["patch", "post", "put", "delete"];
+        const invalidMethods = ["patch", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/topics")

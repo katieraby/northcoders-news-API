@@ -9,6 +9,12 @@ exports.fetchAllTopics = () => {
     });
 };
 
-exports.createTopic = topic => {
-  return knex.insert({ slug: topic, description: "default" }).into("topics");
+exports.createTopic = ({ slug, description }) => {
+  return knex
+    .insert({ slug, description })
+    .into("topics")
+    .returning("*")
+    .then(postedTopic => {
+      return { topic: postedTopic[0] };
+    });
 };

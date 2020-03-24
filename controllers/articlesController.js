@@ -80,8 +80,9 @@ exports.getAllArticles = (req, res, next) => {
 };
 
 exports.postArticle = (req, res, next) => {
-  createTopic(req.body.topic)
-    .then(() => {
+  const topicToPost = { slug: req.body.topic, description: "default" };
+  createTopic(topicToPost)
+    .then(postedTopic => {
       return createArticle(req.body);
     })
     .then(postedArticle => {
