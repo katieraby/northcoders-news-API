@@ -15,10 +15,31 @@
   "POST /api/topics": {
     "description": "Accepts an object with topic slug and description keys, and returns the posted topic",
     "queries": [],
+    "exampleInput": {
+      "slug": "topicName",
+      "description": "Description of the topic"
+    },
     "exampleResponse": {
       "topic": {
         "slug": "Magic",
         "description": "Wizards galore!"
+      }
+    }
+  },
+  "POST /api/users": {
+    "description": "Accepts an object with username, avatar_url and name keys and returns the posted username",
+    "goodToKnow": "When passed only the username, provides default values for the url and name",
+    "queries": [],
+    "exampleInput": {
+      "username": "exampleusername",
+      "avatar_url": "http://avatarurlhere.com/avatar.jpg",
+      "name": "Name Of The User"
+    },
+    "exampleResponse": {
+      "user": {
+        "username": "exampleusername",
+        "avatar_url": "http://avatarurlhere.com/avatar.jpg",
+        "name": "Name Of The User"
       }
     }
   },

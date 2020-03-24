@@ -12,7 +12,21 @@ exports.fetchUserByUsername = username => {
           msg: `No user found for ${username}`
         });
       } else {
-        return { user };
+        return { user: user[0] };
       }
+    });
+};
+
+exports.addNewUser = ({ username, avatar_url, name }) => {
+  return knex
+    .insert({
+      username,
+      avatar_url: avatar_url || "http://avatarurlhere.com/avatar.jpg",
+      name: name || "Name Of The User"
+    })
+    .into("users")
+    .returning("*")
+    .then(postedUser => {
+      return { user: postedUser[0] };
     });
 };

@@ -72,6 +72,16 @@ describe("/api", () => {
   });
 
   describe("/users", () => {
+    it("POST - returns a status 201 and the created user", () => {
+      return request(app)
+        .post("/api/users")
+        .send({ username: "gummybears123" })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.user).to.have.keys(["username", "avatar_url", "name"]);
+        });
+    });
+
     describe("/:username", () => {
       it("GET returns a status 200 and a user object when parametric username endpoint is accessed", () => {
         return request(app)
@@ -114,7 +124,7 @@ describe("/api", () => {
 
     describe("INVALID METHODS", () => {
       it("Status:405", () => {
-        const invalidMethods = ["get", "patch", "post", "put", "delete"];
+        const invalidMethods = ["patch", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/users")
