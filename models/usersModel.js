@@ -30,3 +30,12 @@ exports.addNewUser = ({ username, avatar_url, name }) => {
       return { user: postedUser[0] };
     });
 };
+
+exports.fetchAllUsers = () => {
+  return knex
+    .select("*")
+    .from("users")
+    .then(users => {
+      return { users: users };
+    });
+};

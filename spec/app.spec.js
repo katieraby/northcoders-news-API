@@ -72,6 +72,20 @@ describe("/api", () => {
   });
 
   describe("/users", () => {
+    it("GET - returns a status 200 and a users object with an array of users", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.users).to.be.an("array");
+          expect(body.users[0]).to.have.keys([
+            "username",
+            "avatar_url",
+            "name"
+          ]);
+        });
+    });
+
     it("POST - returns a status 201 and the created user", () => {
       return request(app)
         .post("/api/users")

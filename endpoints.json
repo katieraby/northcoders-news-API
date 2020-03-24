@@ -1,9 +1,9 @@
 {
   "GET /api": {
-    "description": "serves up a json representation of all the available endpoints of the api"
+    "description": "Serves up a json representation of all the available endpoints of the api"
   },
   "GET /api/topics": {
-    "description": "serves an array of all topics",
+    "description": "Serves an array of all topics",
     "queries": [],
     "exampleResponse": {
       "topics": [
@@ -24,6 +24,24 @@
         "slug": "Magic",
         "description": "Wizards galore!"
       }
+    }
+  },
+  "GET /api/users": {
+    "description": "Serves a users object with an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "butter_bridge",
+          "avatar_url": "https: //www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+          "name": "jonny"
+        },
+        {
+          "username": "icellusedkars",
+          "avatar_url": "https: //avatars2.githubusercontent.com/u/24604688?s=460&v=4",
+          "name": "sam"
+        }
+      ]
     }
   },
   "POST /api/users": {
