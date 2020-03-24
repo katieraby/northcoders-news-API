@@ -11,16 +11,22 @@ https://news-from-the-northcoders-api.herokuapp.com/
 
 ```
 GET /api/topics
+POST /api/topics
+
+GET /api/users
+POST /api/users
 
 GET /api/users/:username
 
 GET /api/articles/:article_id
 PATCH /api/articles/:article_id
+DELETE /api/articles/:article_id
 
 POST /api/articles/:article_id/comments
 GET /api/articles/:article_id/comments
 
 GET /api/articles
+POST /api/articles
 
 PATCH /api/comments/:comment_id
 DELETE /api/comments/:comment_id
