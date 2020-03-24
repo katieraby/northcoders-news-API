@@ -356,6 +356,21 @@ describe("/api", () => {
           });
       });
 
+      it("DELETE - returns a status 204 and deletes the specified article by ID", () => {
+        return request(app)
+          .delete("/api/articles/7")
+          .expect(204);
+      });
+
+      it("DELETE - responds with a 404 status code when the passed ID doesnt exist", () => {
+        return request(app)
+          .delete("/api/articles/535435")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).to.equal("Article ID not found");
+          });
+      });
+
       describe("/comments", () => {
         it("POST - responds with a status 201 and the posted comment", () => {
           return request(app)
@@ -544,7 +559,7 @@ describe("/api", () => {
 
       describe("INVALID METHODS", () => {
         it("Status:405", () => {
-          const invalidMethods = ["post", "delete", "put"];
+          const invalidMethods = ["post", "put"];
           const methodPromises = invalidMethods.map(method => {
             return request(app)
               [method]("/api/articles/:article_id")

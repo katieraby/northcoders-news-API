@@ -41,6 +41,17 @@ exports.createCommentByArticleId = (req, article_id) => {
     });
 };
 
+exports.removeArticleById = article_id => {
+  return knex("articles")
+    .delete()
+    .where({ article_id })
+    .then(rowCount => {
+      if (rowCount === 0) {
+        return Promise.reject({ status: 404, msg: "Article ID not found" });
+      }
+    });
+};
+
 exports.fetchCommentsByArticleId = (article_id, query) => {
   if (
     ["comment_id", "votes", "created_at", "author", "body"].indexOf(
