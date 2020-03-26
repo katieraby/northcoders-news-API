@@ -281,10 +281,10 @@ describe("/api", () => {
         .post("/api/articles")
         .send({
           username: "rogersop",
-          title: "How to make a POST request 101",
-          topic: "monsters",
+          title: "Big Hero 6 in San Fransokyo",
+          topic: "films",
           body:
-            "Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request. Here is the body of the article in which we are making a post request."
+            "When a devastating event befalls the city of San Fransokyo and catapults Hiro into the midst of danger, he turns to Baymax and his close friends adrenaline junkie Go Go Tomago, neatnik Wasabi, chemistry whiz Honey Lemon and fanboy Fred. Determined to uncover the mystery, Hiro transforms his friends into a band of high-tech heroes called Big Hero 6.."
         })
         .expect(201)
         .then(res => {
