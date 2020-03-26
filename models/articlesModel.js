@@ -176,6 +176,7 @@ exports.createArticle = ({ username, title, topic, body }) => {
 
 //helper functions to check if exists within the database
 exports.checkTopicExists = topic => {
+  console.log("checking");
   return knex("topics")
     .select("*")
     .where({ "topics.slug": topic })

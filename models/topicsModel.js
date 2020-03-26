@@ -1,5 +1,7 @@
 const knex = require("../db/connection");
 
+const { checkTopicExists } = require("./articlesModel");
+
 exports.fetchAllTopics = () => {
   return knex
     .select("*")
@@ -10,12 +12,29 @@ exports.fetchAllTopics = () => {
 };
 
 exports.createTopic = ({ slug, description }) => {
-  return knex
-    .insert({ slug, description })
-    .into("topics")
-    .returning("*")
-    .then(postedTopic => {
-      console.log(postedTopic);
-      return { topic: postedTopic[0] };
-    });
+  return checkTopicExists(slug).then(doesTopicExist => {
+    if (doesTopicExist === true) {
+      return { topic: { slug, description } };
+    } else {
+      return knex
+        .insert({ slug, description })
+        .into("topics")
+        .returning("*")
+        .then(postedTopic => {
+          return { topic: postedTopic[0] };
+        });
+    }
+  });
 };
+
+// exports.createTopic = ({ slug, description }) => {
+//   return checkTopicExists(slug)
+//     ? { topic: { slug, description } }
+//     : knex
+//       .insert({ slug, description })
+//       .into("topics")
+//       .returning("*")
+//       .then(postedTopic => {
+//         return { topic: postedTopic[0] };
+//       });
+// };
