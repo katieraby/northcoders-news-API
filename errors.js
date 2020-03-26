@@ -1,5 +1,4 @@
 const customErrorHandler = (err, req, res, next) => {
-  console.log(err);
   if (err.status !== undefined) {
     res.status(err.status).send({ msg: err.msg });
   } else {
@@ -25,6 +24,10 @@ const pSQLErrorHandling = (err, req, res, next) => {
       "23503": {
         status: 400,
         msg: "Bad request - input not valid"
+      },
+      "23505": {
+        status: 400,
+        msg: "Topic already exists! Please select existing topic"
       }
     };
     res

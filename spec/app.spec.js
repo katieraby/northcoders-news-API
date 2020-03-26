@@ -43,6 +43,21 @@ describe("/api", () => {
         });
     });
 
+    it.only("POST - returns a status 400 and a message if the posted topic already exists", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({
+          description: "Not dogs",
+          slug: "cats"
+        })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal(
+            "Topic already exists! Please select existing topic"
+          );
+        });
+    });
+
     it("POST - responds with a status 400 when there are keys missing from the body", () => {
       return request(app)
         .post("/api/topics")

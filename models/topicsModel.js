@@ -15,6 +15,7 @@ exports.createTopic = ({ slug, description }) => {
     .into("topics")
     .returning("*")
     .then(postedTopic => {
+      console.log(postedTopic);
       return { topic: postedTopic[0] };
     });
 };
